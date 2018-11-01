@@ -1,0 +1,14 @@
+# 3-dimensional Bezier curve
+{% set degree = 3 %}
+{% set knot_vector = knot_vector(3, 4) %}
+
+shape:
+  type: curve
+  degree: {{ degree }}
+  knot_vector: {{ knot_vector }}
+  control_points:
+    - [10, 5, 10]
+    - [10, 20, -30]
+    - [40, 10, 25]
+    - [-10, 5, 0]
+  #delta: 0.05

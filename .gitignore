@@ -1,0 +1,14 @@
+.idea/*
+build/
+dist/
+geomdl_runner.egg-info/*
+docs/_build
+docs/_static
+*.pyc
+*.out
+*.txt
+*.csv
+*.c
+*.cpp
+*.so
+*.pyd
