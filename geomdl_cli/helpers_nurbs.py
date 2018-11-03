@@ -38,7 +38,7 @@ def build_curve(data):
             pass
     except KeyError:
         ns.ctrlptsw = data['control_points']
-    ns.knotvector = data['knot_vector']
+    ns.knotvector = data['knotvector']
     try:
         ns.delta = data['delta']
     except KeyError:
@@ -62,8 +62,8 @@ def build_surface(data):
             pass
     except KeyError:
         ns.ctrlptsw = data['control_points']
-    ns.knotvector_u = data['knot_vector_u']
-    ns.knotvector_v = data['knot_vector_v']
+    ns.knotvector_u = data['knotvector_u']
+    ns.knotvector_v = data['knotvector_v']
     try:
         ns.delta = data['delta']
     except KeyError:

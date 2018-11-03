@@ -5,7 +5,7 @@
 shape:
   type: curve
   degree: {{ degree }}
-  knot_vector: {{ knot_vector }}
+  knotvector: {{ knot_vector }}
   control_points:
     points:
       - [10, 5, 10]

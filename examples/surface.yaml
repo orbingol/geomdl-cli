@@ -3,8 +3,8 @@ shape:
   type: surface
   degree_u: 3
   degree_v: 3
-  knot_vector_u: [0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 3.0, 3.0, 3.0]
-  knot_vector_v: [0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 3.0, 3.0, 3.0]
+  knotvector_u: [0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 3.0, 3.0, 3.0]
+  knotvector_v: [0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 3.0, 3.0, 3.0, 3.0]
   size_u: 6
   size_v: 6
   control_points:
