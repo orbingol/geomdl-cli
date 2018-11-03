@@ -24,4 +24,4 @@ Author
 License
 =======
 
-`MIT <LICENSE>`_.
+`MIT <LICENSE>`_
