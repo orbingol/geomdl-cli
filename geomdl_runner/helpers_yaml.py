@@ -50,7 +50,11 @@ def _initialize_yaml_file(yaml_file):
             yaml_str = fp.read()
             yaml_str = yaml_str.replace("{%", "<%").replace("%}", "%>").replace("{{", "<{").replace("}}", "}>")
     except IOError:
-        raise
+        print("Cannot open file", str(yaml_file), "for reading. Check if the file exists.")
+        sys.exit(1)
+    except Exception as e:
+        print("An error occurred: {}".format(e.args[-1]))
+        sys.exit(1)
 
     return yaml_str
 
