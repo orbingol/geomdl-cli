@@ -25,11 +25,21 @@
 
 import sys
 from geomdl.visualization import VisMPL
+from . import __version__
+from . import __usage__
 from . import helpers_yaml
 from . import helpers_nurbs
 
 
-def plot_nurbs(yaml_file):
+def command_help():
+    print(__usage__)
+
+
+def command_version():
+    print("GEOMDL version ", __version__)
+
+
+def command_plot(yaml_file):
     nurbs_data = helpers_yaml.read_yaml_file(yaml_file)
     if nurbs_data['shape']['type'] == "curve":
         ns = helpers_nurbs.build_curve(nurbs_data['shape'])

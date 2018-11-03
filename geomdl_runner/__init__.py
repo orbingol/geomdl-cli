@@ -26,3 +26,16 @@
 __author__ = "Onur Rauf Bingol"
 __version__ = "1.0.0"
 __license__ = "MIT"
+
+__usage__ = """\
+GEOMDL - A pure Python NURBS library
+
+Usage:
+
+    geomdl {command} {options}
+
+1) Plotting curves or surfaces:
+
+    geomdl plot curve.yaml
+
+"""

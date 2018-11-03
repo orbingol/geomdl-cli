@@ -24,45 +24,58 @@
 """
 
 import sys
-from . import __version__
 from . import runner
 
-
-__usage__ = """\
-GEOMDL - A pure Python NURBS library
-
-Usage:
-
-    geomdl {command} {options}
-
-1) Plotting curves or surfaces:
-
-    geomdl plot curve.yaml
-
-"""
+# Default commands
+GEOMDL_DEFAULT_COMMANDS = dict(
+    help=dict(
+        command=runner.command_help,
+        num_arguments=0,
+    ),
+    version=dict(
+        command=runner.command_version,
+        num_arguments=0,
+    ),
+    plot=dict(
+        command=runner.command_plot,
+        num_arguments=1,
+    ),
+)
 
 
 def main():
+    # Get number of command line arguments
     argc = len(sys.argv)
+
+    # Show help if there are no command line arguments
     if argc < 2:
-        print(__usage__)
+        runner.command_help()
         sys.exit(0)
 
+    # Command execution
     command = sys.argv[1]
+    try:
+        current_command = GEOMDL_DEFAULT_COMMANDS[command]
+        try:
+            if current_command['num_arguments'] > 0:
+                if argc - 2 < current_command['num_arguments']:
+                    print("To execute", str(command).upper(), "command", str(current_command['num_arguments']), "command line argument(s) required.")
+                    sys.exit(1)
+                current_command['command'](*sys.argv[2:])
+            else:
+                current_command['command']()
+        except KeyError:
+            print("Problem executing", str(command).upper(), "command. Please see the documentation for details.")
+            sys.exit(1)
+        except Exception as e:
+            print("An error occurred: {}".format(e.args[-1]))
+            sys.exit(1)
+    except KeyError:
+        print("The command", str(command).upper(), "does not exist. Please run 'geomdl help' for command reference.")
+        sys.exit(1)
+    except Exception as e:
+        print("An error occurred: {}".format(e.args[-1]))
+        sys.exit(1)
 
-    # Command: help
-    if command == "help":
-        print(__usage__)
-        sys.exit(0)
-
-    # Command: version
-    if command == "version":
-        print("GEOMDL version ", __version__)
-        sys.exit(0)
-
-    # Command: plot
-    if command == "plot":
-        if argc < 3:
-            print("ERROR: plot command requires at least 1 argument")
-        runner.plot_nurbs(sys.argv[2])
-        sys.exit(0)
+    # Command execution completed
+    sys.exit(0)
