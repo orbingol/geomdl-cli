@@ -48,4 +48,25 @@ def build_curve(data):
 
 
 def build_surface(data):
-    pass
+    ns = NURBS.Surface()
+    ns.degree_u = data['degree_u']
+    ns.degree_v = data['degree_v']
+    ns.ctrlpts_size_u = data['size_u']
+    ns.ctrlpts_size_v = data['size_v']
+    try:
+        ns.ctrlpts = data['control_points']['points']
+        try:
+            ns.weights = data['control_points']['weights']
+        except KeyError:
+            # geomdl will automatically set weights vector to 1
+            pass
+    except KeyError:
+        ns.ctrlptsw = data['control_points']
+    ns.knotvector_u = data['knot_vector_u']
+    ns.knotvector_v = data['knot_vector_v']
+    try:
+        ns.delta = data['delta']
+    except KeyError:
+        # Use the default delta value
+        pass
+    return ns
