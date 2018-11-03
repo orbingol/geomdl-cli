@@ -41,20 +41,24 @@ def command_version():
 
 def command_plot(yaml_file):
     nurbs_data = helpers_yaml.read_yaml_file(yaml_file)
-    if nurbs_data['shape']['type'] == "curve":
-        ns = helpers_nurbs.build_curve(nurbs_data['shape'])
-        if ns.dimension == 2:
-            ns.vis = VisMPL.VisCurve2D()
+    try:
+        if nurbs_data['shape']['type'] == "curve":
+            ns = helpers_nurbs.build_curve(nurbs_data['shape'])
+            if ns.dimension == 2:
+                ns.vis = VisMPL.VisCurve2D()
+            else:
+                ns.vis = VisMPL.VisCurve3D()
+            ns.render()
+        elif nurbs_data['shape']['type'] == "surface":
+            ns = helpers_nurbs.build_surface(nurbs_data['shape'])
+            ns.vis = VisMPL.VisSurface()
+            ns.render()
         else:
-            ns.vis = VisMPL.VisCurve3D()
-        ns.render()
-    elif nurbs_data['shape']['type'] == "surface":
-        ns = helpers_nurbs.build_surface(nurbs_data['shape'])
-        ns.vis = VisMPL.VisSurface()
-        ns.render()
-    else:
-        print("Not a valid shape type. Possible types: curve, surface")
+            print("Not a valid shape type. Possible types: curve, surface")
+            sys.exit(1)
+    except KeyError as e:
+        print("Problem with the YAML file. The following key does not exist: {}".format(e.args[-1]))
         sys.exit(1)
-
-
-
+    except Exception as e:
+        print("An error occurred: {}".format(e.args[-1]))
+        sys.exit(1)
