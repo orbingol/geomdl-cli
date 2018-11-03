@@ -14,7 +14,7 @@ Installation
 Usage
 =====
 
-Please run `geomdl help` for details.
+Please run ``geomdl help`` for details.
 
 Author
 ======
