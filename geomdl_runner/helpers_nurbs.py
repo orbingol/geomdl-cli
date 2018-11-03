@@ -29,17 +29,20 @@ from geomdl import NURBS
 def build_curve(data):
     ns = NURBS.Curve()
     ns.degree = data['degree']
-    ns.ctrlpts = data['control_points']
     try:
-        ns.weights = data['weights']
+        ns.ctrlpts = data['control_points']['points']
+        try:
+            ns.weights = data['control_points']['weights']
+        except KeyError:
+            # geomdl will automatically set weights vector to 1
+            pass
     except KeyError:
-        # geomdl will automatically set weights vector to 1
-        pass
+        ns.ctrlptsw = data['control_points']
     ns.knotvector = data['knot_vector']
     try:
         ns.delta = data['delta']
     except KeyError:
-        # Use default delta value
+        # Use the default delta value
         pass
     return ns
 
