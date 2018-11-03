@@ -39,8 +39,8 @@ def get_property(prop, project):
 
 
 data = dict(
-    name='geomdl_runner',
-    version=get_property('__version__', 'geomdl_runner'),
+    name='geomdl_cli',
+    version=get_property('__version__', 'geomdl_cli'),
     description='Run geomdl from the command line',
     long_description=read('README.rst'),
     license='MIT',
@@ -51,7 +51,7 @@ data = dict(
     packages=['geomdl_runner'],
     install_requires=['geomdl>=4.3', 'Jinja2>=2.10', 'ruamel.yaml>=0.15'],
     entry_points={
-        'console_scripts': ['geomdl=geomdl_runner.command_line:main'],
+        'console_scripts': ['geomdl=geomdl_cli.command_line:main'],
     },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
