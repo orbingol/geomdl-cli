@@ -82,15 +82,16 @@ def build_vis(obj, data):
     :type data: dict
     :return: curve or surface updated with a visualization module
     """
+    vis_config = VisMPL.VisConfig(**data)
     if isinstance(obj, NURBS.Curve):
         if obj.dimension == 2:
-            obj.vis = VisMPL.VisCurve2D()
+            obj.vis = VisMPL.VisCurve2D(vis_config)
         elif obj.dimension == 3:
-            obj.vis = VisMPL.VisCurve3D()
+            obj.vis = VisMPL.VisCurve3D(vis_config)
         else:
             raise ValueError("Can only plot 2- or 3-dimensional curves")
 
     if isinstance(obj, NURBS.Surface):
-        obj.vis = VisMPL.VisSurfTriangle()
+        obj.vis = VisMPL.VisSurfTriangle(vis_config)
 
     return obj
