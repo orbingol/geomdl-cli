@@ -24,7 +24,6 @@
 """
 
 import sys
-from geomdl.visualization import VisMPL
 from . import __version__
 from . import __usage__
 from . import helpers_yaml
@@ -42,16 +41,18 @@ def command_version():
 def command_plot(yaml_file):
     nurbs_data = helpers_yaml.read_yaml_file(yaml_file)
     try:
+        vis_data = nurbs_data['visualization']
+    except KeyError:
+        vis_data = {}
+
+    try:
         if nurbs_data['shape']['type'] == "curve":
             ns = helpers_nurbs.build_curve(nurbs_data['shape'])
-            if ns.dimension == 2:
-                ns.vis = VisMPL.VisCurve2D()
-            else:
-                ns.vis = VisMPL.VisCurve3D()
+            helpers_nurbs.build_vis(ns, vis_data)
             ns.render()
         elif nurbs_data['shape']['type'] == "surface":
             ns = helpers_nurbs.build_surface(nurbs_data['shape'])
-            ns.vis = VisMPL.VisSurface()
+            helpers_nurbs.build_vis(ns, vis_data)
             ns.render()
         else:
             print("Not a valid shape type. Possible types: curve, surface")

@@ -24,6 +24,7 @@
 """
 
 from geomdl import NURBS
+from geomdl.visualization import VisMPL
 
 
 def build_curve(data):
@@ -70,3 +71,26 @@ def build_surface(data):
         # Use the default delta value
         pass
     return ns
+
+
+def build_vis(obj, data):
+    """ Prepares visualization module for the input curve or surface.
+
+    :param obj: input curve or surface
+    :type obj: NURBS.Curve or NURBS.Surface
+    :param data: visualization options
+    :type data: dict
+    :return: curve or surface updated with a visualization module
+    """
+    if isinstance(obj, NURBS.Curve):
+        if obj.dimension == 2:
+            obj.vis = VisMPL.VisCurve2D()
+        elif obj.dimension == 3:
+            obj.vis = VisMPL.VisCurve3D()
+        else:
+            raise ValueError("Can only plot 2- or 3-dimensional curves")
+
+    if isinstance(obj, NURBS.Surface):
+        obj.vis = VisMPL.VisSurfTriangle()
+
+    return obj
