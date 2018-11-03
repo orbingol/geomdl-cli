@@ -7,8 +7,8 @@ This repository contains ``geomdl_runner`` module. This module provides a tool f
 Installation
 ============
 
-* Clone the repository: `git clone https://github.com/orbingol/geomdl-runner.git`
-* Inside the newly created directory, run: `python setup.py install`
+* Clone the repository: ``git clone https://github.com/orbingol/geomdl-runner.git``
+* Inside the newly created directory, run: ``python setup.py install``
 * The setup script will install all required dependencies
 
 Usage
