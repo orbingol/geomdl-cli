@@ -49,7 +49,7 @@ data = dict(
     url='https://github.com/orbingol/geomdl-runner',
     keywords='NURBS B-Spline curve surface CAD modeling visualization surface-generator',
     packages=['geomdl_cli'],
-    install_requires=['geomdl>=4.3', 'Jinja2>=2.10', 'ruamel.yaml>=0.15'],
+    install_requires=['geomdl>=4.3', 'Jinja2>=2.10', 'ruamel.yaml>=0.15', 'matplotlib'],
     entry_points={
         'console_scripts': ['geomdl=geomdl_cli.command_line:main'],
     },
