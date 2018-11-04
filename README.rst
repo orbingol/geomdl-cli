@@ -58,4 +58,4 @@ License
 
 
 .. |RTD| image:: https://readthedocs.org/projects/geomdl-cli/badge/?version=latest
-.. _|RTD| https://geomdl-cli.readthedocs.io/en/latest/?badge=latest
+.. _RTD: https://geomdl-cli.readthedocs.io/en/latest/?badge=latest
