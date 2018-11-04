@@ -2,8 +2,10 @@
 build/
 dist/
 geomdl.cli.egg-info/*
-docs/_build
-docs/_static
+docs/_build/*
+!docs/_build/.gitkeep
+docs/_static/*
+!docs/_static/.gitkeep
 *.pyc
 *.out
 *.txt
