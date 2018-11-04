@@ -31,13 +31,13 @@ from . import helpers_nurbs
 
 
 def command_help(**kwargs):
-    """HELP: Displays GEOMDL help"""
+    """HELP: Displays GEOMDL-CLI help"""
     print(__usage__)
 
 
 def command_version(**kwargs):
-    """VERSION: Displays GEOMDL version"""
-    print("GEOMDL version ", __version__)
+    """VERSION: Displays GEOMDL-CLI version"""
+    print("GEOMDL-CLI version", __version__)
 
 
 def command_plot(yaml_file, **kwargs):
