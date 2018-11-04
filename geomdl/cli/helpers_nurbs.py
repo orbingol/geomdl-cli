@@ -34,8 +34,10 @@ def build_nurbs_shape(data, build_func, shape_idx, shape_delta):
     delta = float(shape_delta)
 
     # Build NURBS shapes
-    if len(data) > 1:
-        if idx >= 0:
+    if isinstance(data, list):
+        if len(data) == 1:
+            ns = build_func['single'](data[0])
+        elif idx >= 0:
             ns = build_func['single'](data[idx])
         else:
             ns = build_func['multi'](data)
