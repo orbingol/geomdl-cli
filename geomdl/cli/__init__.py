@@ -28,14 +28,20 @@ __version__ = "0.1.0"
 __license__ = "MIT"
 
 __usage__ = """\
-GEOMDL - A pure Python NURBS library
+GEOMDL-CLI - Run geomdl from the command line
+
+geomdl-cli is a command line tool for geomdl (NURBS-Python), a pure Python NURBS and B-Spline library.
 
 Usage:
 
     geomdl {command} {options}
 
-1) Plotting curves or surfaces:
+Available commands:
+    help        displays geomdl-cli help
+    version     displays geomdl-cli help
+    plot        plots single or multiple NURBS curves and surfaces using matplotlib
 
-    geomdl plot curve.yaml
+Individual command help available via
 
+    geomdl {command} --help\
 """
