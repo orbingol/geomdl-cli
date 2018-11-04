@@ -1,6 +1,6 @@
 """
 
-    geomdl_runner - Run NURBS-Python (geomdl) from the command line
+    geomdl_cli - Run NURBS-Python (geomdl) from the command line
     Copyright (c) 2018 Onur Rauf Bingol <orbingol@gmail.com>
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
