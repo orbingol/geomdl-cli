@@ -53,19 +53,13 @@ def build_curve_single(data):
     ns.degree = data['degree']
     try:
         ns.ctrlpts = data['control_points']['points']
-        try:
+        if 'weights' in data['control_points']:
             ns.weights = data['control_points']['weights']
-        except KeyError:
-            # geomdl will automatically set weights vector to 1
-            pass
     except KeyError:
         ns.ctrlptsw = data['control_points']
     ns.knotvector = data['knotvector']
-    try:
+    if 'delta' in data:
         ns.delta = data['delta']
-    except KeyError:
-        # Use the default delta value
-        pass
     return ns
 
 
@@ -85,20 +79,14 @@ def build_surface_single(data):
     ns.ctrlpts_size_v = data['size_v']
     try:
         ns.ctrlpts = data['control_points']['points']
-        try:
+        if 'weights' in data['control_points']:
             ns.weights = data['control_points']['weights']
-        except KeyError:
-            # geomdl will automatically set weights vector to 1
-            pass
     except KeyError:
         ns.ctrlptsw = data['control_points']
     ns.knotvector_u = data['knotvector_u']
     ns.knotvector_v = data['knotvector_v']
-    try:
+    if 'delta' in data:
         ns.delta = data['delta']
-    except KeyError:
-        # Use the default delta value
-        pass
     return ns
 
 
