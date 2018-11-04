@@ -37,8 +37,9 @@ Usage:
     geomdl {command} {options}
 
 Available commands:
+
     help        displays geomdl-cli help
-    version     displays geomdl-cli help
+    version     displays geomdl-cli version
     plot        plots single or multiple NURBS curves and surfaces using matplotlib
     eval        evaluates NURBS shapes and exports the evaluated points in various formats
 
