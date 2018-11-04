@@ -30,15 +30,15 @@ from . import runner
 GEOMDL_DEFAULT_COMMANDS = dict(
     help=dict(
         command=runner.command_help,
-        num_arguments=0,
+        command_arguments=0,
     ),
     version=dict(
         command=runner.command_version,
-        num_arguments=0,
+        command_arguments=0,
     ),
     plot=dict(
         command=runner.command_plot,
-        num_arguments=1,
+        command_arguments=1,
     ),
 )
 
@@ -52,19 +52,28 @@ def main():
         runner.command_help()
         sys.exit(0)
 
+    # Extract command parameters
+    command_params = {}
+    for s in sys.argv:
+        if s.startswith("--"):
+            s_arr = s[2:].split("=")
+            command_params[s_arr[0]] = s_arr[1]
+            sys.argv.remove(s)
+
     # Command execution
     command = sys.argv[1]
     try:
         current_command = GEOMDL_DEFAULT_COMMANDS[command]
         try:
-            if current_command['num_arguments'] > 0:
-                if argc - 2 < current_command['num_arguments']:
-                    print("To execute", str(command).upper(), "command", str(current_command['num_arguments']), "command line argument(s) required.")
+            if current_command['command_arguments'] > 0:
+                if argc - 2 < current_command['command_arguments']:
+                    print("To execute", str(command).upper(), "command", str(current_command['command_arguments']), "command line argument(s) required.")
                     sys.exit(1)
-                current_command['command'](*sys.argv[2:])
+                current_command['command'](*sys.argv[2:], **command_params)
             else:
-                current_command['command']()
+                current_command['command'](**command_params)
         except KeyError:
+            import pdb; pdb.set_trace()
             print("Problem executing", str(command).upper(), "command. Please see the documentation for details.")
             sys.exit(1)
         except Exception as e:

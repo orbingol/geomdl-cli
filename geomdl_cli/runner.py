@@ -30,33 +30,46 @@ from . import helpers_yaml
 from . import helpers_nurbs
 
 
-def command_help():
+def command_help(**kwargs):
     print(__usage__)
 
 
-def command_version():
+def command_version(**kwargs):
     print("GEOMDL version ", __version__)
 
 
-def command_plot(yaml_file):
-    nurbs_data = helpers_yaml.read_yaml_file(yaml_file)
+def command_plot(yaml_file, **kwargs):
+    yaml_data = helpers_yaml.read_yaml_file(yaml_file)
+    nurbs_data = yaml_data['shape']
     try:
-        vis_data = nurbs_data['visualization']
+        vis_data = yaml_data['visualization']
     except KeyError:
         vis_data = {}
 
+    # Detect NURBS shape building function
+    shape_types = dict(
+        curve=dict(
+            single=helpers_nurbs.build_curve_single,
+            multi=helpers_nurbs.build_curve_multi,
+        ),
+        surface=dict(
+            single=helpers_nurbs.build_surface_single,
+            multi=helpers_nurbs.build_surface_multi,
+        ),
+    )
+
     try:
-        if nurbs_data['shape']['type'] == "curve":
-            ns = helpers_nurbs.build_curve(nurbs_data['shape'])
-            helpers_nurbs.build_vis(ns, vis_data)
-            ns.render()
-        elif nurbs_data['shape']['type'] == "surface":
-            ns = helpers_nurbs.build_surface(nurbs_data['shape'])
-            helpers_nurbs.build_vis(ns, vis_data)
-            ns.render()
-        else:
-            print("Not a valid shape type. Possible types: curve, surface")
-            sys.exit(1)
+        build_func = shape_types[str(nurbs_data['type'])]
+    except KeyError:
+        print("Unsupported shape type: ", str(nurbs_data['type']), "\n")
+        types_str = ", ".join([k for k in shape_types.keys()])
+        print("Possible values are:", types_str)
+        sys.exit(1)
+
+    try:
+        ns = helpers_nurbs.build_nurbs_shape(nurbs_data['data'], build_func)
+        helpers_nurbs.build_vis(ns, vis_data)
+        ns.render()
     except KeyError as e:
         print("Problem with the YAML file. The following key does not exist: {}".format(e.args[-1]))
         sys.exit(1)

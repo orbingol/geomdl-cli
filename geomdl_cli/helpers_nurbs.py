@@ -24,10 +24,24 @@
 """
 
 from geomdl import NURBS
+from geomdl import Multi
 from geomdl.visualization import VisMPL
 
 
-def build_curve(data):
+def build_nurbs_shape(data, build_func, curve_no=-1):
+    num_shapes = len(data)
+
+    # Build NURBS shapes
+    if num_shapes > 1:
+        if curve_no >= 0:
+            return build_func['single'](data[curve_no])
+        else:
+            return build_func['multi'](data)
+    else:
+        return build_func['single'](data)
+
+
+def build_curve_single(data):
     ns = NURBS.Curve()
     ns.degree = data['degree']
     try:
@@ -48,7 +62,15 @@ def build_curve(data):
     return ns
 
 
-def build_surface(data):
+def build_curve_multi(data):
+    mns = Multi.MultiCurve()
+    for d in data:
+        ns = build_curve_single(d)
+        mns.add(ns)
+    return mns
+
+
+def build_surface_single(data):
     ns = NURBS.Surface()
     ns.degree_u = data['degree_u']
     ns.degree_v = data['degree_v']
@@ -73,6 +95,14 @@ def build_surface(data):
     return ns
 
 
+def build_surface_multi(data):
+    mns = Multi.MultiSurface()
+    for d in data:
+        ns = build_surface_single(d)
+        mns.add(ns)
+    return mns
+
+
 def build_vis(obj, data):
     """ Prepares visualization module for the input curve or surface.
 
@@ -83,7 +113,7 @@ def build_vis(obj, data):
     :return: curve or surface updated with a visualization module
     """
     vis_config = VisMPL.VisConfig(**data)
-    if isinstance(obj, NURBS.Curve):
+    if isinstance(obj, (NURBS.Curve, Multi.MultiCurve)):
         if obj.dimension == 2:
             obj.vis = VisMPL.VisCurve2D(vis_config)
         elif obj.dimension == 3:
@@ -91,7 +121,7 @@ def build_vis(obj, data):
         else:
             raise ValueError("Can only plot 2- or 3-dimensional curves")
 
-    if isinstance(obj, NURBS.Surface):
+    if isinstance(obj, (NURBS.Surface, Multi.MultiSurface)):
         obj.vis = VisMPL.VisSurfTriangle(vis_config)
 
     return obj
