@@ -1,7 +1,10 @@
 Run NURBS-Python (geomdl) from the command line
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``geomdl.cli`` module provides tools for using `geomdl <https://pypi.org/project/geomdl>`_ library from the command line.
+|RTD|_
+
+``geomdl.cli`` module provides a set of commands for using `geomdl <https://pypi.org/project/geomdl>`_ library from
+the command line.
 
 Installation
 ============
@@ -38,6 +41,11 @@ Individual command help
 
 Please run ``geomdl help`` for more details.
 
+Documentation
+=============
+
+https://geomdl-cli.readthedocs.io/
+
 Author
 ======
 
@@ -47,3 +55,7 @@ License
 =======
 
 `MIT <LICENSE>`_
+
+
+.. |RTD| image:: https://readthedocs.org/projects/geomdl-cli/badge/?version=latest
+.. _|RTD| https://geomdl-cli.readthedocs.io/en/latest/?badge=latest
