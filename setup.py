@@ -1,6 +1,6 @@
 """
 
-    geomdl_cli - Run NURBS-Python (geomdl) from the command line
+    geomdl-cli - Run NURBS-Python (geomdl) from the command line
     Copyright (c) 2018 Onur Rauf Bingol <orbingol@gmail.com>
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -39,19 +39,19 @@ def get_property(prop, project):
 
 
 data = dict(
-    name='geomdl_cli',
-    version=get_property('__version__', 'geomdl_cli'),
+    name='geomdl.cli',
+    version=get_property('__version__', 'geomdl/cli'),
     description='Run geomdl from the command line',
     long_description=read('README.rst'),
     license='MIT',
     author='Onur Rauf Bingol',
     author_email='nurbs-python@googlegroups.com',
-    url='https://github.com/orbingol/geomdl-runner',
+    url='https://github.com/orbingol/geomdl-cli',
     keywords='NURBS B-Spline curve surface CAD modeling visualization surface-generator',
-    packages=['geomdl_cli'],
+    packages=['geomdl.cli'],
     install_requires=['geomdl>=4.3.5', 'Jinja2>=2.10', 'ruamel.yaml>=0.15', 'matplotlib'],
     entry_points={
-        'console_scripts': ['geomdl=geomdl_cli.command_line:main'],
+        'console_scripts': ['geomdl=geomdl.cli.command_line:main'],
     },
     classifiers=[
         'Development Status :: 4 - Beta',
