@@ -70,8 +70,9 @@ def main():
         try:
             if current_command['command_arguments'] > 0:
                 if argc - 2 < current_command['command_arguments']:
-                    print(str(command).upper(), "command can take ", str(current_command['command_arguments']), "command line argument(s).")
-                    sys.exit(1)
+                    runner.command_version()
+                    print(current_command['command'].__doc__)
+                    sys.exit(0)
                 current_command['command'](*sys.argv[2:], **command_params)
             else:
                 current_command['command'](**command_params)
