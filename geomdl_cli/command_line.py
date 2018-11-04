@@ -70,7 +70,7 @@ def main():
         try:
             if current_command['command_arguments'] > 0:
                 if argc - 2 < current_command['command_arguments']:
-                    print("To execute", str(command).upper(), "command", str(current_command['command_arguments']), "command line argument(s) required.")
+                    print(str(command).upper(), "command can take ", str(current_command['command_arguments']), "command line argument(s).")
                     sys.exit(1)
                 current_command['command'](*sys.argv[2:], **command_params)
             else:
