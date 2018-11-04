@@ -54,7 +54,7 @@ data = dict(
         'console_scripts': ['geomdl=geomdl_cli.command_line:main'],
     },
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
         'Topic :: Scientific/Engineering :: Mathematics',
