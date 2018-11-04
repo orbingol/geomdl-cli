@@ -58,7 +58,10 @@ def main():
     for s in sys.argv:
         if s.startswith("--"):
             s_arr = s[2:].split("=")
-            command_params[s_arr[0]] = s_arr[1]
+            try:
+                command_params[s_arr[0]] = s_arr[1]
+            except IndexError:
+                command_params[s_arr[0]] = 1
         else:
             new_sysargv.append(s)
     sys.argv = new_sysargv
@@ -66,13 +69,18 @@ def main():
     # Command execution
     command = sys.argv[1]
     try:
+        # Get command details
         current_command = GEOMDL_DEFAULT_COMMANDS[command]
+
+        # Print command help
+        if "help" in command_params:
+            _print_help(current_command['command'])
+
+        # Execute command
         try:
             if current_command['command_arguments'] > 0:
                 if argc - 2 < current_command['command_arguments']:
-                    runner.command_version()
-                    print(current_command['command'].__doc__)
-                    sys.exit(0)
+                    _print_help(current_command['command'])
                 current_command['command'](*sys.argv[2:], **command_params)
             else:
                 current_command['command'](**command_params)
@@ -91,3 +99,11 @@ def main():
 
     # Command execution completed
     sys.exit(0)
+
+
+def _print_help(cmd, **kwargs):
+    call_sys_exit = kwargs.get('call_sys_exit', True)
+    runner.command_version(**kwargs)
+    print(cmd.__doc__)
+    if call_sys_exit:
+        sys.exit(0)
