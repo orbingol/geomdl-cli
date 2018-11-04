@@ -8,7 +8,7 @@ Installation
 ============
 
 * Clone the repository: ``git clone https://github.com/orbingol/geomdl-cli.git``
-* Inside the newly created directory, run: ``python setup.py install``
+* Inside the newly created directory, run: ``pip install .``
 * The setup script will install all required dependencies
 
 Usage
