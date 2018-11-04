@@ -76,7 +76,6 @@ def main():
             else:
                 current_command['command'](**command_params)
         except KeyError:
-            import pdb; pdb.set_trace()
             print("Problem executing", str(command).upper(), "command. Please see the documentation for details.")
             sys.exit(1)
         except Exception as e:
