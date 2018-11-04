@@ -44,24 +44,25 @@ VERSION: Displays GEOMDL-CLI version\
     print("GEOMDL-CLI version", __version__)
 
 
-def command_plot(yaml_file, **kwargs):
+def command_plot(yaml_file_name, **kwargs):
     """\
 PLOT: Plots single or multi NURBS curves or surfaces
 
-"geomdl plot" command takes a YAML file as the input. The YAML file can contain single or multiple shapes. \
-The YAML file format is described in the GEOMDL-CLI documentation.
+"geomdl plot" command takes a YAML file as the input and plots the shapes defined in the file. \
+The YAML file can contain single or multiple shapes. The YAML file format is described in the GEOMDL-CLI documentation.
 
-Alternatively, NURBS-Python library may be used to export curves and surfaces as YAML files. \
+NURBS-Python library may be used to export curves and surfaces as YAML files. \
 Please see "geomdl.exchange.export_yaml" documentation for details.
 
 Usage:
 
-    geomdl plot {yaml file}                             plots the shape defined in the YAML file
-    geomdl plot {yaml file} --delta=0.1                 plots the shape using the evaluation delta of 0.1
-    geomdl plot {yaml file} --index=2                   plots the 2nd shape defined in the YAML file
-    geomdl plot {yaml file} --index=1 --delta=0.025     plots the 1st shape using the evaluation delta of 0.025
+    geomdl plot {yaml_file}                             plots the shape defined in the YAML file
+    geomdl plot {yaml_file} --delta=0.1                 plots the shape using the evaluation delta of 0.1
+    geomdl plot {yaml_file} --index=2                   plots the 2nd shape defined in the YAML file
+    geomdl plot {yaml_file} --index=1 --delta=0.025     plots the 1st shape using the evaluation delta of 0.025
 
 Available parameters:
+
     --help      displays this message
     --index=n   plots n-th curve or surface in the YAML file (works only for multi shapes)
     --delta=d   allows customization of the pre-defined evaluation delta in the YAML file. 0.0 < d < 1.0
@@ -73,7 +74,7 @@ Please see GEOMDL-CLI documentation for details.\
     shape_delta = kwargs.get('delta', -1.0)
 
     # Process YAML file
-    yaml_data = helpers_yaml.read_yaml_file(yaml_file)
+    yaml_data = helpers_yaml.read_yaml_file(yaml_file_name)
     nurbs_data = yaml_data['shape']
     try:
         vis_data = yaml_data['visualization']
