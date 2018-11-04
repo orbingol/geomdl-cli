@@ -40,6 +40,10 @@ GEOMDL_DEFAULT_COMMANDS = dict(
         command=runner.command_plot,
         command_arguments=1,
     ),
+    eval=dict(
+        command=runner.command_eval,
+        command_arguments=1,
+    ),
 )
 
 

@@ -113,3 +113,83 @@ Please see GEOMDL-CLI documentation for details.\
     except Exception as e:
         print("An error occurred: {}".format(e.args[-1]))
         sys.exit(1)
+
+
+def command_eval(yaml_file_name, **kwargs):
+    """\
+EVAL: Evaluates NURBS curves and surfaces
+
+"geomdl eval" command takes a YAML file as the input and evaluated the shapes defined in the file. \
+The YAML file can contain single or multiple shapes. The YAML file format is described in the GEOMDL-CLI documentation.
+
+The default behavior of the command is printing the evaluated surface or curve points to the screen. For multi curves \
+and surfaces, there will be a "---" line between the evaluated points of the individual shapes. This command can also \
+export the evaluated points in various formats, such as CSV, TXT and legacy VTK.
+
+Usage:
+
+    geomdl eval {yaml_file}                                 evaluates the shape and prints the points to the screen
+    geomdl eval {yaml_file} --type=csv --name=test.csv      exports the evaluated points as a CSV file
+
+Available parameters:
+
+    --help      displays this message
+    --index=n   plots n-th curve or surface in the YAML file (works only for multi shapes)
+    --delta=d   allows customization of the pre-defined evaluation delta in the YAML file. 0.0 < d < 1.0
+    --type=csv  defines the file type (csv, txt, vtk) for exporting the evaluated points
+    --name=fn   sets the file name for exporting the evaluated points
+
+Please see GEOMDL-CLI documentation for details.\
+    """
+    # Get keyword arguments
+    shape_idx = kwargs.get('index', -1)
+    shape_delta = kwargs.get('delta', -1.0)
+    export_filename = kwargs.get('name', None)
+    export_type = kwargs.get('type', 'screen')
+
+    # Check user input
+    possible_types = ['screen', 'csv', 'txt', 'vtk']
+    if export_type not in possible_types:
+        ptypes_str = ", ".join([pt for pt in possible_types])
+        print("Cannot export in", str(export_type), "format. Possible types:", ptypes_str)
+        sys.exit(1)
+
+    if export_type != 'screen' and not export_filename:
+        print("A file name is needed to export in", str(export_type), "format. Please use --name to set.")
+        sys.exit(1)
+
+    # Process YAML file
+    yaml_data = helpers_yaml.read_yaml_file(yaml_file_name)
+    nurbs_data = yaml_data['shape']
+
+    # Detect NURBS shape building function
+    shape_types = dict(
+        curve=dict(
+            single=helpers_nurbs.build_curve_single,
+            multi=helpers_nurbs.build_curve_multi,
+        ),
+        surface=dict(
+            single=helpers_nurbs.build_surface_single,
+            multi=helpers_nurbs.build_surface_multi,
+        ),
+    )
+
+    try:
+        build_func = shape_types[str(nurbs_data['type'])]
+    except KeyError:
+        print("Unsupported shape type: ", str(nurbs_data['type']), "\n")
+        types_str = ", ".join([k for k in shape_types.keys()])
+        print("Possible values are:", types_str)
+        sys.exit(1)
+
+    # Plot the NURBS object
+    try:
+        ns = helpers_nurbs.build_nurbs_shape(data=nurbs_data['data'], build_func=build_func,
+                                             shape_delta=shape_delta, shape_idx=shape_idx)
+        helpers_nurbs.export_evalpts(obj=ns, file_name=export_filename, export_type=export_type)
+    except KeyError as e:
+        print("Problem with the YAML file. The following key does not exist: {}".format(e.args[-1]))
+        sys.exit(1)
+    except Exception as e:
+        print("An error occurred: {}".format(e.args[-1]))
+        sys.exit(1)

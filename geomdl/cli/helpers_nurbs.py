@@ -25,6 +25,7 @@
 
 from geomdl import NURBS
 from geomdl import Multi
+from geomdl import exchange
 from geomdl.visualization import VisMPL
 
 
@@ -122,3 +123,25 @@ def build_vis(obj, data):
         obj.vis = VisMPL.VisSurfTriangle(vis_config)
 
     return obj
+
+
+def export_evalpts(obj, file_name, export_type):
+    if export_type == "csv":
+        exchange.export_csv(obj, file_name, point_type='evalpts')
+    elif export_type == "txt":
+        exchange.export_txt(obj, file_name, point_type='evalpts')
+    elif export_type == "vtk":
+        exchange.export_txt(obj, file_name, point_type='evalpts')
+    else:
+        if isinstance(obj, Multi.Abstract.Multi):
+            sz = len(obj)
+            for idx, opt in enumerate(obj.evalpts):
+                for pt in opt:
+                    line = ", ".join([str(p) for p in pt])
+                    print(line)
+                if idx != sz - 1:
+                    print("---")
+        else:
+            for pt in obj.evalpts:
+                line = ", ".join([str(p) for p in pt])
+                print(line)
