@@ -39,6 +39,11 @@ def command_version(**kwargs):
 
 
 def command_plot(yaml_file, **kwargs):
+    # Get keyword arguments
+    shape_idx = kwargs.get('index', -1)
+    shape_delta = kwargs.get('delta', -1.0)
+
+    # Process YAML file
     yaml_data = helpers_yaml.read_yaml_file(yaml_file)
     nurbs_data = yaml_data['shape']
     try:
@@ -66,9 +71,11 @@ def command_plot(yaml_file, **kwargs):
         print("Possible values are:", types_str)
         sys.exit(1)
 
+    # Plot the NURBS object
     try:
-        ns = helpers_nurbs.build_nurbs_shape(nurbs_data['data'], build_func)
-        helpers_nurbs.build_vis(ns, vis_data)
+        ns = helpers_nurbs.build_nurbs_shape(data=nurbs_data['data'], build_func=build_func,
+                                             shape_delta=shape_delta, shape_idx=shape_idx)
+        helpers_nurbs.build_vis(obj=ns, data=vis_data)
         ns.render()
     except KeyError as e:
         print("Problem with the YAML file. The following key does not exist: {}".format(e.args[-1]))

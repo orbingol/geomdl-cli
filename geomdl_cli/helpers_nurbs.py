@@ -28,17 +28,24 @@ from geomdl import Multi
 from geomdl.visualization import VisMPL
 
 
-def build_nurbs_shape(data, build_func, curve_no=-1):
-    num_shapes = len(data)
+def build_nurbs_shape(data, build_func, shape_idx, shape_delta):
+    # Apply necessary conversions
+    idx = int(shape_idx)
+    delta = float(shape_delta)
 
     # Build NURBS shapes
-    if num_shapes > 1:
-        if curve_no >= 0:
-            return build_func['single'](data[curve_no])
+    if len(data) > 1:
+        if idx >= 0:
+            ns = build_func['single'](data[idx])
         else:
-            return build_func['multi'](data)
+            ns = build_func['multi'](data)
     else:
-        return build_func['single'](data)
+        ns = build_func['single'](data)
+
+    # Set delta value
+    if delta > 0:
+        ns.delta = delta
+    return ns
 
 
 def build_curve_single(data):
