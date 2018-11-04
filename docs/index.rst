@@ -15,10 +15,3 @@ command line.
 
 geomdl-cli is developed by `Onur Rauf Bingol <https://github.com/orbingol>`_ and all the code released under the
 `MIT License <https://github.com/orbingol/geomdl-cli/blob/master/LICENSE>`_.
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
