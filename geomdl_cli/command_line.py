@@ -44,14 +44,6 @@ GEOMDL_DEFAULT_COMMANDS = dict(
 
 
 def main():
-    # Get number of command line arguments
-    argc = len(sys.argv)
-
-    # Show help if there are no command line arguments
-    if argc < 2:
-        runner.command_help()
-        sys.exit(0)
-
     # Extract command parameters and update sys.argv
     command_params = {}
     new_sysargv = []
@@ -65,6 +57,14 @@ def main():
         else:
             new_sysargv.append(s)
     sys.argv = new_sysargv
+
+    # Get number of command line arguments
+    argc = len(sys.argv)
+
+    # Show help if there are no command line arguments
+    if argc < 2:
+        runner.command_help()
+        sys.exit(0)
 
     # Command execution
     command = sys.argv[1]
