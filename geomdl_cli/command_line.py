@@ -52,13 +52,16 @@ def main():
         runner.command_help()
         sys.exit(0)
 
-    # Extract command parameters
+    # Extract command parameters and update sys.argv
     command_params = {}
+    new_sysargv = []
     for s in sys.argv:
         if s.startswith("--"):
             s_arr = s[2:].split("=")
             command_params[s_arr[0]] = s_arr[1]
-            sys.argv.remove(s)
+        else:
+            new_sysargv.append(s)
+    sys.argv = new_sysargv
 
     # Command execution
     command = sys.argv[1]
