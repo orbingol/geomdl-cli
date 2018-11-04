@@ -74,15 +74,18 @@ def main():
 
         # Print command help
         if "help" in command_params:
-            _print_help(current_command['command'])
+            _print_help(current_command['command'], call_sys_exit=True)
 
-        # Execute command
+        # Execute command with command parameters
         try:
             if current_command['command_arguments'] > 0:
                 if argc - 2 < current_command['command_arguments']:
-                    _print_help(current_command['command'])
+                    # Print command help if there are no command arguments
+                    _print_help(current_command['command'], call_sys_exit=True)
+                # Call the command with the command arguments
                 current_command['command'](*sys.argv[2:], **command_params)
             else:
+                # Call the command without the command arguments
                 current_command['command'](**command_params)
         except KeyError:
             print("Problem executing", str(command).upper(), "command. Please see the documentation for details.")
