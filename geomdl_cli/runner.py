@@ -31,14 +31,17 @@ from . import helpers_nurbs
 
 
 def command_help(**kwargs):
+    """HELP: Displays GEOMDL help"""
     print(__usage__)
 
 
 def command_version(**kwargs):
+    """VERSION: Displays GEOMDL version"""
     print("GEOMDL version ", __version__)
 
 
 def command_plot(yaml_file, **kwargs):
+    """PLOT: Plots the input NURBS curve(s) or surface(s)"""
     # Get keyword arguments
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
