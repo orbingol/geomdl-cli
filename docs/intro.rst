@@ -16,4 +16,4 @@ Onur Rauf Bingol
 License
 =======
 
-`MIT License <https://github.com/orbingol/geomdl-cli/blob/master/LICENSE>`_.
+`MIT <https://github.com/orbingol/geomdl-cli/blob/master/LICENSE>`_
