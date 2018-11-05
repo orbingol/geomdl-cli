@@ -1,9 +1,9 @@
 Run NURBS-Python (geomdl) from the command line
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-|RTD|_
+|RTD|_ |PYPI|_
 
-``geomdl.cli`` module provides a set of commands for using `geomdl <https://pypi.org/project/geomdl>`_ library from
+**geomdl.cli** module provides a set of commands for using `geomdl <https://pypi.org/project/geomdl>`_ library from
 the command line.
 
 Installation
@@ -29,7 +29,7 @@ Using geomdl-cli
 Available commands
 ------------------
 
-* **help:** displays the command help
+* **help:** displays the package help text, e.g. available commands, how to use the tool, ...
 * **version:** displays the package version
 * **plot:** plots single or multiple NURBS curves and surfaces using matplotlib
 * **eval:** evaluates NURBS shapes and exports the evaluated points in various formats
@@ -38,8 +38,6 @@ Individual command help
 -----------------------
 
 ``geomdl {command} --help``
-
-Please run ``geomdl help`` for more details.
 
 Documentation
 =============
@@ -59,3 +57,6 @@ License
 
 .. |RTD| image:: https://readthedocs.org/projects/geomdl-cli/badge/?version=latest
 .. _RTD: https://geomdl-cli.readthedocs.io/en/latest/?badge=latest
+
+.. |PYPI| image:: https://img.shields.io/pypi/v/geomdl.cli.svg
+.. _PYPI: https://pypi.org/project/geomdl.cli/
