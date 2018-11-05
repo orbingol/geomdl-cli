@@ -52,7 +52,7 @@ VERSION: Displays GEOMDL-CLI version\
 
 def command_plot(yaml_file_name, **kwargs):
     """\
-PLOT: Plots single or multi NURBS curves or surfaces
+PLOT: Plots NURBS curves and surfaces
 
 "geomdl plot" command takes a YAML file as the input and plots the shapes defined in the file. \
 The YAML file can contain single or multiple shapes. The YAML file format is described in the GEOMDL-CLI documentation.
