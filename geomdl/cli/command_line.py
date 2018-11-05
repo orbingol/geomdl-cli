@@ -83,14 +83,16 @@ def main():
 
         # Print command help
         if "help" in command_params:
-            _print_help(current_command['command'], call_sys_exit=True)
+            print(current_command['command'].__doc__)
+            sys.exit(0)
 
         # Execute command with command parameters
         try:
             if current_command['command_arguments'] > 0:
                 if argc - 2 < current_command['command_arguments']:
-                    # Print command help if there are no command arguments
-                    _print_help(current_command['command'], call_sys_exit=True)
+                    # Print command help if there are no command arguments but expecting some
+                    print(current_command['command'].__doc__)
+                    sys.exit(0)
                 # Call the command with the command arguments
                 current_command['command'](*sys.argv[2:], **command_params)
             else:
@@ -111,11 +113,3 @@ def main():
 
     # Command execution completed
     sys.exit(0)
-
-
-def _print_help(cmd, **kwargs):
-    call_sys_exit = kwargs.get('call_sys_exit', True)
-    runner.command_version(**kwargs)
-    print(cmd.__doc__)
-    if call_sys_exit:
-        sys.exit(0)
