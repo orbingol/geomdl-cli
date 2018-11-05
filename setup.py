@@ -68,9 +68,9 @@ data = dict(
         'Programming Language :: Python :: 3.7'
     ],
     project_urls={
-        'Documentation': 'http://nurbs-python.readthedocs.io/',
-        'Source': 'https://github.com/orbingol/geomdl-runner',
-        'Tracker': 'https://github.com/orbingol/geomdl-runner/issues',
+        'Documentation': 'http://geomdl-cli.readthedocs.io/',
+        'Source': 'https://github.com/orbingol/geomdl-cli',
+        'Tracker': 'https://github.com/orbingol/geomdl-cli/issues',
     },
 )
 
