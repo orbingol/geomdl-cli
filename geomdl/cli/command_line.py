@@ -34,23 +34,21 @@ from . import runner
 CLI_DEFAULT_COMMANDS = dict(
     help=dict(
         doc="displays the help message",
-        command=runner.command_help,
-        command_arguments=0,
+        cmd=runner.command_help,
     ),
     version=dict(
         doc="displays the package version",
-        command=runner.command_version,
-        command_arguments=0,
+        cmd=runner.command_version,
     ),
     plot=dict(
         doc="plots single or multiple NURBS curves and surfaces using matplotlib",
-        command=runner.command_plot,
-        command_arguments=1,
+        cmd=runner.command_plot,
+        cmd_args=1,
     ),
     eval=dict(
         doc="evaluates NURBS shapes and exports the evaluated points in various formats",
-        command=runner.command_eval,
-        command_arguments=1,
+        cmd=runner.command_eval,
+        cmd_args=1,
     ),
 )
 
@@ -87,21 +85,22 @@ def main():
 
         # Print command help
         if "help" in command_params:
-            print(current_command['command'].__doc__)
+            print(current_command['cmd'].__doc__)
             sys.exit(0)
 
         # Execute command with command parameters
         try:
-            if current_command['command_arguments'] > 0:
-                if argc - 2 < current_command['command_arguments']:
+            cmd_args = current_command['cmd_args'] if 'cmd_args' in current_command else 0
+            if cmd_args > 0:
+                if argc - 2 < cmd_args:
                     # Print command help if there are no command arguments but expecting some
-                    print(current_command['command'].__doc__)
+                    print(current_command['cmd'].__doc__)
                     sys.exit(0)
                 # Call the command with the command arguments
-                current_command['command'](*sys.argv[2:], **command_params)
+                current_command['cmd'](*sys.argv[2:], **command_params)
             else:
                 # Call the command without the command arguments
-                current_command['command'](**command_params)
+                current_command['cmd'](**command_params)
         except KeyError:
             print("Problem executing", str(command).upper(), "command. Please see the documentation for details.")
             sys.exit(1)
