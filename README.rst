@@ -29,10 +29,10 @@ Using geomdl-cli
 Available commands
 ------------------
 
-* **help:** displays the package help text, e.g. available commands, how to use the tool, ...
+* **help:** displays the package help text, e.g. available commands, how to use them, etc.
 * **version:** displays the package version
 * **plot:** plots single or multiple NURBS curves and surfaces using matplotlib
-* **eval:** evaluates NURBS shapes and exports the evaluated points in various formats
+* **eval:** evaluates NURBS shapes and exports the evaluated points in various formats, e.g. csv, txt and vtk
 
 Individual command help
 -----------------------
