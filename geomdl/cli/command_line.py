@@ -27,34 +27,71 @@
 # Entry points for the Python packaging tools and command definitions
 #
 
+import os
+import os.path
 import sys
-from . import runner
+import importlib
+import json
+from . import __module_name__
 
 # Command definitions
-CLI_DEFAULT_COMMANDS = dict(
+CLI_COMMANDS = dict(
     help=dict(
         doc="displays the help message",
-        cmd=runner.command_help,
+        module="geomdl.cli.runner",
+        func="command_help",
     ),
     version=dict(
         doc="displays the package version",
-        cmd=runner.command_version,
+        module="geomdl.cli.runner",
+        func="command_version",
     ),
     plot=dict(
         doc="plots single or multiple NURBS curves and surfaces using matplotlib",
-        cmd=runner.command_plot,
-        cmd_args=1,
+        module="geomdl.cli.runner",
+        func="command_plot",
+        func_args=1,
     ),
     eval=dict(
         doc="evaluates NURBS shapes and exports the evaluated points in various formats",
-        cmd=runner.command_eval,
-        cmd_args=1,
+        module="geomdl.cli.runner",
+        func="command_eval",
+        func_args=1,
     ),
 )
+
+CLI_USER_CONFIG_DIR = "." + __module_name__
+CLI_USER_CONFIG_FILE = __module_name__ + ".json"
+
+
+def _read_custom_config(root_dir):
+    config_dir = os.path.join(root_dir, CLI_USER_CONFIG_DIR)
+    config_file = os.path.join(config_dir, CLI_USER_CONFIG_FILE)
+    if os.path.isfile(config_file):
+        # Add config directory to the path
+        sys.path.append(config_dir)
+        # Open config file
+        try:
+            with open(config_file, 'r') as fp:
+                # Load the JSON file
+                json_str = json.load(fp)
+                # Add custom commands to the commands dictionary
+                CLI_COMMANDS.update(json_str)
+        except IOError:
+            print("Cannot read", config_file, "for reading. Skipping...")
+        except Exception as e:
+            print("Error while reading custom configuration file {fn}: {e}".format(fn=config_file, e=e.args[-1]))
+            sys.exit(1)
 
 
 def main():
     """Entry point for the "geomdl" command line script"""
+    # Default user configuration directories
+    user_config_root_dirs = [os.getcwd(), os.path.expanduser("~")]
+    # Load user commands
+    for root_dir in user_config_root_dirs:
+        _read_custom_config(root_dir)
+
     # Extract command parameters and update sys.argv
     command_params = {}
     new_sysargv = []
@@ -74,41 +111,44 @@ def main():
 
     # Show help if there are no command line arguments
     if argc < 2:
-        runner.command_help()
+        print("No commands specified. Please run 'geomdl help' to see the list of commands available.")
         sys.exit(0)
 
     # Command execution
-    command = sys.argv[1]
     try:
-        # Get command details
-        current_command = CLI_DEFAULT_COMMANDS[command]
+        # Load the command information from the command dictionary
+        command = CLI_COMMANDS[sys.argv[1]]
 
-        # Print command help
+        # Import the module and get the function to be executed
+        module = importlib.import_module(command['module'])
+        func = getattr(module, command['func'])
+
+        # Print command help if "--help" is present in the command arguments
         if "help" in command_params:
-            print(current_command['cmd'].__doc__)
+            print(func.__doc__)
             sys.exit(0)
 
-        # Execute command with command parameters
+        # Run the command
         try:
-            cmd_args = current_command['cmd_args'] if 'cmd_args' in current_command else 0
+            cmd_args = command['func_args'] if 'func_args' in command else 0
             if cmd_args > 0:
                 if argc - 2 < cmd_args:
                     # Print command help if there are no command arguments but expecting some
-                    print(current_command['cmd'].__doc__)
+                    print(func.__doc__)
                     sys.exit(0)
                 # Call the command with the command arguments
-                current_command['cmd'](*sys.argv[2:], **command_params)
+                func(*sys.argv[2:], **command_params)
             else:
                 # Call the command without the command arguments
-                current_command['cmd'](**command_params)
+                func(**command_params)
         except KeyError:
-            print("Problem executing", str(command).upper(), "command. Please see the documentation for details.")
+            print("Problem executing", str(sys.argv[1]).upper(), "command. Please see the documentation for details.")
             sys.exit(1)
         except Exception as e:
             print("An error occurred: {}".format(e.args[-1]))
             sys.exit(1)
     except KeyError:
-        print("The command", str(command).upper(), "does not exist. Please run 'geomdl help' for command reference.")
+        print("The command", str(sys.argv[1]).upper(), "does not exist. Please run 'geomdl help' for command reference.")
         sys.exit(1)
     except Exception as e:
         print("An error occurred: {}".format(e.args[-1]))
