@@ -24,7 +24,7 @@
 """
 
 __author__ = "Onur Rauf Bingol"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __license__ = "MIT"
 
 __usage__ = """\
