@@ -23,11 +23,15 @@
 
 """
 
+#
+# Entry points for the Python packaging tools and command definitions
+#
+
 import sys
 from . import runner
 
-# Default commands
-GEOMDL_DEFAULT_COMMANDS = dict(
+# Command definitions
+CLI_DEFAULT_COMMANDS = dict(
     help=dict(
         command=runner.command_help,
         command_arguments=0,
@@ -48,6 +52,7 @@ GEOMDL_DEFAULT_COMMANDS = dict(
 
 
 def main():
+    """Entry point for the "geomdl" command line script"""
     # Extract command parameters and update sys.argv
     command_params = {}
     new_sysargv = []
@@ -74,7 +79,7 @@ def main():
     command = sys.argv[1]
     try:
         # Get command details
-        current_command = GEOMDL_DEFAULT_COMMANDS[command]
+        current_command = CLI_DEFAULT_COMMANDS[command]
 
         # Print command help
         if "help" in command_params:

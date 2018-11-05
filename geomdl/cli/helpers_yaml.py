@@ -23,6 +23,10 @@
 
 """
 
+#
+# YAML file parsing and template processing functions
+#
+
 import sys
 
 try:
@@ -38,6 +42,7 @@ import geomdl.utilities
 
 
 def _initialize_jinja2_funcs():
+    """Initializes Jinja2 functions which can be used in the template files"""
     custom_jinja2_funcs = dict(
         knot_vector=geomdl.utilities.generate_knot_vector,
     )
@@ -45,6 +50,7 @@ def _initialize_jinja2_funcs():
 
 
 def _initialize_yaml_file(yaml_file):
+    """Opens a YAML file for reading and applies Jinja2 template fixes"""
     try:
         with open(yaml_file, 'r') as fp:
             yaml_str = fp.read()
@@ -60,6 +66,7 @@ def _initialize_yaml_file(yaml_file):
 
 
 def read_yaml_file(yaml_file):
+    """Opens a YAML file, parses it through Jinja2 and ruamel.yaml and returns a dict containing the YAML data"""
     yaml_source = _initialize_yaml_file(yaml_file)
     env = jinja2.Environment(
         loader=jinja2.DictLoader({yaml_file: yaml_source}),
@@ -77,5 +84,3 @@ def read_yaml_file(yaml_file):
     data = yaml.load(yaml_str)
 
     return data
-
-

@@ -23,6 +23,10 @@
 
 """
 
+#
+# geomdl-cli commands
+#
+
 import sys
 from . import __version__ as cli_version
 from geomdl import __version__ as base_version
