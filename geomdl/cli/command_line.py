@@ -33,18 +33,22 @@ from . import runner
 # Command definitions
 CLI_DEFAULT_COMMANDS = dict(
     help=dict(
+        doc="displays the help message",
         command=runner.command_help,
         command_arguments=0,
     ),
     version=dict(
+        doc="displays the package version",
         command=runner.command_version,
         command_arguments=0,
     ),
     plot=dict(
+        doc="plots single or multiple NURBS curves and surfaces using matplotlib",
         command=runner.command_plot,
         command_arguments=1,
     ),
     eval=dict(
+        doc="evaluates NURBS shapes and exports the evaluated points in various formats",
         command=runner.command_eval,
         command_arguments=1,
     ),

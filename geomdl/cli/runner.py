@@ -24,7 +24,7 @@
 """
 
 #
-# geomdl-cli commands
+# geomdl-cli command definitions
 #
 
 import sys
