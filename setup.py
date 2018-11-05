@@ -38,9 +38,10 @@ def get_property(prop, project):
     return result.group(1)
 
 
+module_dir = "geomdl/cli"
 data = dict(
-    name='geomdl.cli',
-    version=get_property('__version__', 'geomdl/cli'),
+    name=get_property('__module_name__', module_dir),
+    version=get_property('__version__', module_dir),
     description='Run geomdl from the command line',
     long_description=read('README.rst'),
     license='MIT',
