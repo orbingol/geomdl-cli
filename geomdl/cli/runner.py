@@ -68,12 +68,19 @@ Available parameters:
     --help      displays this message
     --index=n   plots n-th curve or surface in the YAML file (works only for multi shapes)
     --delta=d   allows customization of the pre-defined evaluation delta in the YAML file. 0.0 < d < 1.0
+    --name=fn   sets the file name for saving the figure (the figure window will not open if this parameter is set)
+
+Notes:
+
+    - If this command is too slow for you, please set the delta value to a bigger value, e.g. 0.05 or 0.1.
+    - Please note that you may only export the figure in the file formats which matplotlib support.
 
 Please see GEOMDL-CLI documentation for details.\
     """
     # Get keyword arguments
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
+    save_file_name = kwargs.get('name', None)
 
     # Process YAML file
     yaml_data = helpers_yaml.read_yaml_file(yaml_file_name)
@@ -103,12 +110,18 @@ Please see GEOMDL-CLI documentation for details.\
         print("Possible values are:", types_str)
         sys.exit(1)
 
+    # Prepare render method parameters
+    if save_file_name:
+        render_params = dict(plot=False, filename=save_file_name)
+    else:
+        render_params = dict(plot=True)
+
     # Plot the NURBS object
     try:
         ns = helpers_nurbs.build_nurbs_shape(data=nurbs_data['data'], build_func=build_func,
                                              shape_delta=shape_delta, shape_idx=shape_idx)
         helpers_nurbs.build_vis(obj=ns, data=vis_data)
-        ns.render()
+        ns.render(**render_params)
     except KeyError as e:
         print("Problem with the YAML file. The following key does not exist: {}".format(e.args[-1]))
         sys.exit(1)
