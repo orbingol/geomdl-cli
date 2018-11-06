@@ -34,23 +34,23 @@ __cli_name__ = "geomdl-cli"
 __cli_commands__ = dict(
     help=dict(
         doc="displays the help message",
-        module="geomdl.cli.runner",
+        module="geomdl.cli.commands",
         func="command_help",
     ),
     version=dict(
         doc="displays the package version",
-        module="geomdl.cli.runner",
+        module="geomdl.cli.commands",
         func="command_version",
     ),
     plot=dict(
         doc="plots single or multiple NURBS curves and surfaces using matplotlib",
-        module="geomdl.cli.runner",
+        module="geomdl.cli.commands",
         func="command_plot",
         func_args=1,
     ),
     eval=dict(
         doc="evaluates NURBS shapes and exports the evaluated points in various formats",
-        module="geomdl.cli.runner",
+        module="geomdl.cli.commands",
         func="command_eval",
         func_args=1,
     ),
