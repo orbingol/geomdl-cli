@@ -39,7 +39,9 @@ def command_help(**kwargs):
     """\
 HELP: Displays geomdl-cli help\
     """
+    # Display the package help
     print(__cli_usage__)
+    # Display all available command help messages, including the user-defined commands
     print("Available commands:\n")
     for cmd in __cli_commands__.items():
         print("    " + cmd[0] + "\t\t" + cmd[1]['doc'])

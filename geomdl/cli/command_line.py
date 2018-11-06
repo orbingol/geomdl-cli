@@ -24,7 +24,7 @@
 """
 
 #
-# Entry points for the Python packaging tools and command definitions
+# Command line interface definitions and entry points for the Python packaging tools
 #
 
 import os

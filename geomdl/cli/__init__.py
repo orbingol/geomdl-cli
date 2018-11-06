@@ -62,7 +62,7 @@ __cli_dir__ = "." + __cli_name__
 # Custom configuration file
 __cli_file__ = __cli_name__ + ".json"
 
-# Command help
+# Package help
 __cli_usage__ = """\
 GEOMDL-CLI - Run NURBS-Python (geomdl) from the command line
 
