@@ -32,41 +32,16 @@ import os.path
 import sys
 import importlib
 import json
-from . import __module_name__
-
-# Command definitions
-CLI_COMMANDS = dict(
-    help=dict(
-        doc="displays the help message",
-        module="geomdl.cli.runner",
-        func="command_help",
-    ),
-    version=dict(
-        doc="displays the package version",
-        module="geomdl.cli.runner",
-        func="command_version",
-    ),
-    plot=dict(
-        doc="plots single or multiple NURBS curves and surfaces using matplotlib",
-        module="geomdl.cli.runner",
-        func="command_plot",
-        func_args=1,
-    ),
-    eval=dict(
-        doc="evaluates NURBS shapes and exports the evaluated points in various formats",
-        module="geomdl.cli.runner",
-        func="command_eval",
-        func_args=1,
-    ),
-)
-
-CLI_USER_CONFIG_DIR = "." + __module_name__
-CLI_USER_CONFIG_FILE = __module_name__ + ".json"
+from . import __cli_name__, __cli_commands__, __cli_dir__, __cli_file__
 
 
-def _read_custom_config(root_dir):
-    config_dir = os.path.join(root_dir, CLI_USER_CONFIG_DIR)
-    config_file = os.path.join(config_dir, CLI_USER_CONFIG_FILE)
+def read_custom_config(root_dir):
+    """ Reads custom configuration files and adds them to the command list.
+
+    :param root_dir: root directory containing the custom configuration
+    """
+    config_dir = os.path.join(root_dir, __cli_dir__)
+    config_file = os.path.join(config_dir, __cli_file__)
     if os.path.isfile(config_file):
         # Add config directory to the path
         sys.path.append(config_dir)
@@ -76,7 +51,7 @@ def _read_custom_config(root_dir):
                 # Load the JSON file
                 json_str = json.load(fp)
                 # Add custom commands to the commands dictionary
-                CLI_COMMANDS.update(json_str)
+                __cli_commands__.update(json_str)
         except IOError:
             print("Cannot read", config_file, "for reading. Skipping...")
         except Exception as e:
@@ -90,7 +65,7 @@ def main():
     user_config_root_dirs = [os.getcwd(), os.path.expanduser("~")]
     # Load user commands
     for root_dir in user_config_root_dirs:
-        _read_custom_config(root_dir)
+        read_custom_config(root_dir)
 
     # Extract command parameters and update sys.argv
     command_params = {}
@@ -111,13 +86,13 @@ def main():
 
     # Show help if there are no command line arguments
     if argc < 2:
-        print("No commands specified. Please run '" + __module_name__ + " help' to see the list of commands available.")
+        print("No commands specified. Please run '" + __cli_name__ + " help' to see the list of commands available.")
         sys.exit(0)
 
     # Command execution
     try:
         # Load the command information from the command dictionary
-        command = CLI_COMMANDS[sys.argv[1]]
+        command = __cli_commands__[sys.argv[1]]
 
         # Import the module and get the function to be executed
         module = importlib.import_module(command['module'])
@@ -148,7 +123,7 @@ def main():
             print("An error occurred: {}".format(e.args[-1]))
             sys.exit(1)
     except KeyError:
-        print("The command", str(sys.argv[1]).upper(), "is not available. Please run '" + __module_name__ +
+        print("The command", str(sys.argv[1]).upper(), "is not available. Please run '" + __cli_name__ +
               " help' to see the list of commands available.")
         sys.exit(1)
     except Exception as e:

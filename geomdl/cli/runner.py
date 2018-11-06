@@ -28,9 +28,9 @@
 #
 
 import sys
-from . import __version__ as cli_version
 from geomdl import __version__ as base_version
-from . import __usage__
+from . import __version__ as cli_version
+from . import __cli_usage__, __cli_commands__
 from . import helpers_yaml
 from . import helpers_nurbs
 
@@ -39,7 +39,10 @@ def command_help(**kwargs):
     """\
 HELP: Displays geomdl-cli help\
     """
-    print(__usage__)
+    print(__cli_usage__)
+    print("Available commands:\n")
+    for cmd in __cli_commands__.items():
+        print("    " + cmd[0] + "\t\t" + cmd[1]['doc'])
 
 
 def command_version(**kwargs):

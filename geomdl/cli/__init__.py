@@ -23,15 +23,50 @@
 
 """
 
-__module_name__ = "geomdl-cli"
 __author__ = "Onur Rauf Bingol"
 __version__ = "0.2.0"
 __license__ = "MIT"
 
-__usage__ = """\
-GEOMDL-CLI - Run geomdl from the command line
+# Name of the command line script
+__cli_name__ = "geomdl-cli"
 
-geomdl-cli is a command line tool for geomdl (NURBS-Python), a pure Python NURBS and B-Spline library.
+# Command definitions
+__cli_commands__ = dict(
+    help=dict(
+        doc="displays the help message",
+        module="geomdl.cli.runner",
+        func="command_help",
+    ),
+    version=dict(
+        doc="displays the package version",
+        module="geomdl.cli.runner",
+        func="command_version",
+    ),
+    plot=dict(
+        doc="plots single or multiple NURBS curves and surfaces using matplotlib",
+        module="geomdl.cli.runner",
+        func="command_plot",
+        func_args=1,
+    ),
+    eval=dict(
+        doc="evaluates NURBS shapes and exports the evaluated points in various formats",
+        module="geomdl.cli.runner",
+        func="command_eval",
+        func_args=1,
+    ),
+)
+
+# Custom configuration directory
+__cli_dir__ = "." + __cli_name__
+
+# Custom configuration file
+__cli_file__ = __cli_name__ + ".json"
+
+# Command help
+__cli_usage__ = """\
+GEOMDL-CLI - Run NURBS-Python (geomdl) from the command line
+
+geomdl-cli is a command line tool for 'geomdl', a pure Python NURBS and B-Spline library.
 
 Usage:
 
@@ -40,11 +75,4 @@ Usage:
 Individual command help available via
 
     geomdl {command} --help
-
-Available commands:
-
-    help        displays this message
-    version     displays the package version
-    plot        plots single or multiple NURBS curves and surfaces using matplotlib
-    eval        evaluates NURBS shapes and exports the evaluated points in various formats\
 """
