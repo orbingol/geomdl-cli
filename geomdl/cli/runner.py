@@ -37,17 +37,17 @@ from . import helpers_nurbs
 
 def command_help(**kwargs):
     """\
-HELP: Displays GEOMDL-CLI help\
+HELP: Displays geomdl-cli help\
     """
     print(__usage__)
 
 
 def command_version(**kwargs):
     """\
-VERSION: Displays GEOMDL-CLI version\
+VERSION: Displays geomdl-cli version\
     """
-    print("GEOMDL-CLI version", cli_version)
-    print("GEOMDL version", base_version)
+    print("geomdl-cli version", cli_version)
+    print("geomdl version", base_version)
 
 
 def command_plot(yaml_file_name, **kwargs):
@@ -55,7 +55,7 @@ def command_plot(yaml_file_name, **kwargs):
 PLOT: Plots NURBS curves and surfaces
 
 "geomdl plot" command takes a YAML file as the input and plots the shapes defined in the file. \
-The YAML file can contain single or multiple shapes. The YAML file format is described in the GEOMDL-CLI documentation.
+The YAML file can contain single or multiple shapes. The YAML file format is described in the geomdl-cli documentation.
 
 NURBS-Python library may be used to export curves and surfaces as YAML files. \
 Please see "geomdl.exchange.export_yaml" documentation for details.
@@ -79,7 +79,7 @@ Notes:
     - If this command is too slow for you, please set the delta value to a bigger value, e.g. 0.05 or 0.1.
     - Please note that you may only export the figure in the file formats which matplotlib support.
 
-Please see GEOMDL-CLI documentation for details.\
+Please see the documentation for more details.\
     """
     # Get keyword arguments
     shape_idx = kwargs.get('index', -1)
@@ -139,7 +139,7 @@ def command_eval(yaml_file_name, **kwargs):
 EVAL: Evaluates NURBS curves and surfaces
 
 "geomdl eval" command takes a YAML file as the input and evaluated the shapes defined in the file. \
-The YAML file can contain single or multiple shapes. The YAML file format is described in the GEOMDL-CLI documentation.
+The YAML file can contain single or multiple shapes. The YAML file format is described in the geomdl-cli documentation.
 
 The default behavior of the command is printing the evaluated surface or curve points to the screen. For multi curves \
 and surfaces, there will be a "---" line between the evaluated points of the individual shapes. This command can also \
@@ -158,7 +158,7 @@ Available parameters:
     --type=csv  defines the file type (csv, txt, vtk) for exporting the evaluated points
     --name=fn   sets the file name for exporting the evaluated points
 
-Please see GEOMDL-CLI documentation for details.\
+Please see the documentation for more details.\
     """
     # Get keyword arguments
     shape_idx = kwargs.get('index', -1)

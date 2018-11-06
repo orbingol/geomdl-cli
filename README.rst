@@ -24,7 +24,7 @@ From the repository
 Using geomdl-cli
 ================
 
-``geomdl {command} {options}``
+``geomdl-cli {command} {options}``
 
 Available commands
 ------------------
@@ -37,7 +37,7 @@ Available commands
 Individual command help
 -----------------------
 
-``geomdl {command} --help``
+``geomdl-cli {command} --help``
 
 Documentation
 =============

@@ -52,7 +52,7 @@ data = dict(
     packages=['geomdl.cli'],
     install_requires=['geomdl>=4.3.6', 'Jinja2>=2.10', 'ruamel.yaml>=0.15', 'matplotlib'],
     entry_points={
-        'console_scripts': ['geomdl=geomdl.cli.command_line:main'],
+        'console_scripts': ['geomdl-cli=geomdl.cli.command_line:main'],
     },
     classifiers=[
         'Development Status :: 4 - Beta',

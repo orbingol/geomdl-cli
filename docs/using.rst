@@ -1,14 +1,14 @@
 Using geomdl-cli
 ^^^^^^^^^^^^^^^^
 
-``geomdl {command} {options}``
+``geomdl-cli {command} {options}``
 
 Available commands
 ==================
 
-``geomdl help``
+``geomdl-cli help``
 
 Individual command help
 =======================
 
-``geomdl {command} --help``
+``geomdl-cli {command} --help``

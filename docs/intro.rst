@@ -1,7 +1,7 @@
 What is geomdl-cli?
 ^^^^^^^^^^^^^^^^^^^
 
-``geomdl.cli`` module provides a set of commands for using `geomdl <https://pypi.org/project/geomdl>`_ library from
+**geomdl.cli** module provides a set of commands for using `geomdl <https://pypi.org/project/geomdl>`_ library from
 the command line.
 
 Author
