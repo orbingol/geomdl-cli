@@ -111,7 +111,7 @@ def main():
 
     # Show help if there are no command line arguments
     if argc < 2:
-        print("No commands specified. Please run 'geomdl help' to see the list of commands available.")
+        print("No commands specified. Please run '" + __module_name__ + " help' to see the list of commands available.")
         sys.exit(0)
 
     # Command execution
@@ -148,7 +148,8 @@ def main():
             print("An error occurred: {}".format(e.args[-1]))
             sys.exit(1)
     except KeyError:
-        print("The command", str(sys.argv[1]).upper(), "does not exist. Please run 'geomdl help' for command reference.")
+        print("The command", str(sys.argv[1]).upper(), "is not available. Please run '" + __module_name__ +
+              " help' to see the list of commands available.")
         sys.exit(1)
     except Exception as e:
         print("An error occurred: {}".format(e.args[-1]))
