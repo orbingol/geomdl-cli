@@ -25,7 +25,7 @@
 
 __module_name__ = "geomdl-cli"
 __author__ = "Onur Rauf Bingol"
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 __license__ = "MIT"
 
 __usage__ = """\

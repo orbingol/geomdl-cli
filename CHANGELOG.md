@@ -1,5 +1,12 @@
 # geomdl-cli Changelog
 
+## 0.2.0 released on 2018-11-05
+
+* Renamed command line script to `geomdl-cli` for user convenience
+* Add support for custom command configuration without changing the base code
+* Updated command help messages
+* Minor updates and fixes
+
 ## 0.1.2 released on 2018-11-04
 
 * `plot` command can now save the figures using `--name` parameter
