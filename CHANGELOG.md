@@ -1,5 +1,9 @@
 # geomdl-cli Changelog
 
+## 0.2.1 released on 2018-11-05
+
+* Improved `help` command output and added support for displaying user-defined command help messages
+
 ## 0.2.0 released on 2018-11-05
 
 * Renamed command line script to `geomdl-cli` for user convenience
