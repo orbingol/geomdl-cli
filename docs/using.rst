@@ -33,3 +33,5 @@ Individual command help can be displayed via ``--help`` parameter.
 .. code-block:: console
 
     geomdl-cli {command} --help
+
+where ``{command}`` corresponds to the command to be executed.
