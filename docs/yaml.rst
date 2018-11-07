@@ -52,12 +52,12 @@ This section contains the single or multi NURBS data. ``type`` and ``data`` sect
 Type section
 ~~~~~~~~~~~~
 
-This section defines the type of the NURBS shape. It can be *curve* or *surface*
+This section defines the type of the NURBS shape. For NURBS curves, it should be set to *curve*.
 
 Data section
 ~~~~~~~~~~~~
 
-This section defines the NURBS data, i.e. degrees, knot vectors and control_points. ``weights`` and ``delta`` section
+This section defines the NURBS data, i.e. degrees, knot vectors and control_points. ``weights`` and ``delta`` sections
 are optional.
 
 Defining YAML files for surfaces
@@ -128,10 +128,10 @@ This section contains the single or multi NURBS data. ``type`` and ``data`` sect
 Type section
 ~~~~~~~~~~~~
 
-This section defines the type of the NURBS shape. It can be *curve* or *surface*
+This section defines the type of the NURBS shape. For NURBS surface, it should be set to *surface*.
 
 Data section
 ~~~~~~~~~~~~
 
-This section defines the NURBS data, i.e. degrees, knot vectors and control_points. ``weights`` and ``delta`` section
+This section defines the NURBS data, i.e. degrees, knot vectors and control_points. ``weights`` and ``delta`` sections
 are optional.
