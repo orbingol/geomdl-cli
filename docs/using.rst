@@ -3,7 +3,9 @@ Using geomdl-cli
 
 *geomdl-cli* uses the following structure for executing the commands.
 
-``geomdl-cli {command} {options} {parameters}``
+.. code-block:: console
+
+    geomdl-cli {command} {options} {parameters}
 
 where
 
@@ -17,13 +19,17 @@ Please see the individual command help for details on ``{options}`` and ``{param
 Available commands
 ==================
 
-The following command displays all default and user-defined commands.
+The following command displays all default and user-defined commands along with a basic command usage information.
 
-``geomdl-cli help``
+.. code-block:: console
+
+    geomdl-cli help
 
 Individual command help
 =======================
 
 Individual command help can be displayed via ``--help`` parameter.
 
-``geomdl-cli {command} --help``
+.. code-block:: console
+
+    geomdl-cli {command} --help
