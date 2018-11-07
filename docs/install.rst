@@ -1,7 +1,7 @@
 Installing geomdl-cli
 ^^^^^^^^^^^^^^^^^^^^^
 
-The recommended method for installation is using `pip <https://pypi.org/project/pip/>`.
+The recommended method for installation is using `pip <https://pypi.org/project/pip/>`_.
 
 .. code-block:: console
 
