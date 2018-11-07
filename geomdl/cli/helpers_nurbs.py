@@ -24,7 +24,7 @@
 """
 
 #
-# NURBS evaluation and utility functions
+# NURBS evaluation and utility functions for geomdl-cli
 #
 
 from geomdl import NURBS

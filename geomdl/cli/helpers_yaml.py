@@ -24,7 +24,7 @@
 """
 
 #
-# YAML file parsing and template processing functions
+# YAML file parsing and template processing functions for geomdl-cli
 #
 
 import sys

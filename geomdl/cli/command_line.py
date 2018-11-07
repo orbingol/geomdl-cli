@@ -24,7 +24,7 @@
 """
 
 #
-# Command line interface definitions and entry points for the Python packaging tools
+# Entry point definitions for Python packaging tools
 #
 
 import os
@@ -60,7 +60,7 @@ def read_custom_config(root_dir):
 
 
 def main():
-    """Entry point for the "geomdl" command line script"""
+    """Entry point for the command line application"""
     # Default user configuration directories
     user_config_root_dirs = [os.getcwd(), os.path.expanduser("~")]
     # Load user commands
