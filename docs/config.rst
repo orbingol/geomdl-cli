@@ -7,7 +7,12 @@ It is possible to add custom commands to *geomdl-cli* without changing the base 
 * user home directory
 * directory that you are running *geomdl-cli* application
 
-Creating Custom Commands
+Creating custom commands
 ========================
+
+To be updated!
+
+Overriding existing commands
+============================
 
 To be updated!
