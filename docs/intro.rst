@@ -7,10 +7,11 @@ B-spline evaluation library from the command line.
 The geomdl-cli package automatically installs the following as its dependencies:
 
 * `geomdl <https://pypi.org/project/geomdl>`_
+* `Matplotlib <https://matplotlib.org/>`_
 * `Jinja2 <https://pypi.org/project/Jinja2/>`_
 * `ruamel.yaml <https://pypi.org/project/ruamel.yaml/>`_
 
-Although geomdl-cli is a pure Python package, it is only tested on Python v3.5.x and later.
+Although geomdl-cli is a pure Python package, it is only tested with Python v3.5.x and later.
 
 Author
 ======
