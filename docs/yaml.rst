@@ -135,3 +135,8 @@ Data section
 
 This section defines the NURBS data, i.e. degrees, knot vectors and control_points. ``weights`` and ``delta`` sections
 are optional.
+
+Using Jinja2 templates in YAML files
+====================================
+
+To be updated!

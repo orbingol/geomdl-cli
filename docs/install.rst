@@ -1,13 +1,13 @@
 Installing geomdl-cli
 ^^^^^^^^^^^^^^^^^^^^^
 
-From PyPI
-=========
+The recommended method for installation is using `pip <https://pypi.org/project/pip/>`.
 
-``pip install geomdl.cli``
+.. code-block:: console
 
-From the repository
-===================
+    pip install geomdl.cli
+
+Alternatively, you can install the latest development version from the repository:
 
 * Clone the repository: ``git clone https://github.com/orbingol/geomdl-cli.git``
 * Inside the newly created directory, run: ``pip install .``

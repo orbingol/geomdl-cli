@@ -1,7 +1,7 @@
 Using geomdl-cli
 ^^^^^^^^^^^^^^^^
 
-*geomdl-cli* uses the following structure for executing the commands.
+geomdl-cli uses the following structure for executing the commands:
 
 .. code-block:: console
 
