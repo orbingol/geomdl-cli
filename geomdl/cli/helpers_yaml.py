@@ -40,21 +40,19 @@ except ImportError:
 from ruamel.yaml import YAML
 import geomdl.utilities
 
-
-def _initialize_jinja2_funcs():
-    """Initializes Jinja2 functions which can be used in the template files"""
-    custom_jinja2_funcs = dict(
-        knot_vector=geomdl.utilities.generate_knot_vector,
-    )
-    return custom_jinja2_funcs
+# Define custom Jinja2 template functions
+CLI_TEMPLATE_FUNCTIONS = dict(
+    knot_vector=geomdl.utilities.generate_knot_vector,
+)
 
 
-def _initialize_yaml_file(yaml_file):
-    """Opens a YAML file for reading and applies Jinja2 template fixes"""
+def read_yaml_file(yaml_file):
+    """Opens a YAML file, parses it through Jinja2 and ruamel.yaml and returns a dict containing the YAML data"""
+    # Open YAML file
     try:
         with open(yaml_file, 'r') as fp:
-            yaml_str = fp.read()
-            yaml_str = yaml_str.replace("{%", "<%").replace("%}", "%>").replace("{{", "<{").replace("}}", "}>")
+            yaml_src = fp.read()
+            yaml_src = yaml_src.replace("{%", "<%").replace("%}", "%>").replace("{{", "<{").replace("}}", "}>")
     except IOError:
         print("Cannot open file", str(yaml_file), "for reading. Check if the file exists.")
         sys.exit(1)
@@ -62,25 +60,24 @@ def _initialize_yaml_file(yaml_file):
         print("An error occurred: {}".format(e.args[-1]))
         sys.exit(1)
 
-    return yaml_str
-
-
-def read_yaml_file(yaml_file):
-    """Opens a YAML file, parses it through Jinja2 and ruamel.yaml and returns a dict containing the YAML data"""
-    yaml_source = _initialize_yaml_file(yaml_file)
+    # Generate Jinja2 environment
     env = jinja2.Environment(
-        loader=jinja2.DictLoader({yaml_file: yaml_source}),
+        loader=jinja2.DictLoader({yaml_file: yaml_src}),
         trim_blocks=True,
         block_start_string='<%', block_end_string='%>',
         variable_start_string='<{', variable_end_string='}>'
     )
-    custom_funcs = _initialize_jinja2_funcs()
-    for k, v in custom_funcs.items():
+
+    # Load custom functions into the Jinja2 environment
+    for k, v in CLI_TEMPLATE_FUNCTIONS.items():
         env.globals[k] = v
-    yaml_str = env.get_template(yaml_file).render()
 
-    # Parse YAML string after Jinja2 processing
+    # Process Jinja2 template functions & variables inside the YAML file
+    yaml_src = env.get_template(yaml_file).render()
+
+    # Parse YAML after Jinja2 template processing
     yaml = YAML()
-    data = yaml.load(yaml_str)
+    data = yaml.load(yaml_src)
 
+    # Return parsed YAML data
     return data
