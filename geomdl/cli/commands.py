@@ -28,8 +28,7 @@
 #
 
 import sys
-from geomdl import __version__ as base_version
-from . import __version__ as cli_version
+from . import __version__
 from . import __cli_usage__, __cli_commands__
 from . import helpers_yaml
 from . import helpers_nurbs
@@ -49,10 +48,10 @@ HELP: Displays geomdl-cli help\
 
 def command_version(**kwargs):
     """\
-VERSION: Displays geomdl-cli version\
+VERSION: Displays geomdl-cli and geomdl version\
     """
-    print("geomdl-cli version", cli_version)
-    print("geomdl version", base_version)
+    print("geomdl-cli version", __version__)
+    helpers_nurbs.print_version()
 
 
 def command_plot(yaml_file_name, **kwargs):

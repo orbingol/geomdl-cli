@@ -27,10 +27,16 @@
 # NURBS evaluation and utility functions for geomdl-cli
 #
 
+from geomdl import __version__
 from geomdl import NURBS
 from geomdl import Multi
 from geomdl import exchange
 from geomdl.visualization import VisMPL
+
+
+def print_version():
+    """Prints geomdl version"""
+    print("geomdl version", __version__)
 
 
 def build_nurbs_shape(data, build_func, shape_idx, shape_delta):
