@@ -30,7 +30,7 @@
 import sys
 from . import __version__
 from . import __cli_usage__, __cli_commands__
-from . import helpers_yaml
+from . import helpers_file
 from . import helpers_nurbs
 
 
@@ -91,7 +91,7 @@ Please see the documentation for more details.\
     save_file_name = kwargs.get('name', None)
 
     # Process YAML file
-    yaml_data = helpers_yaml.read_yaml_file(yaml_file_name)
+    yaml_data = helpers_file.read_yaml_file(yaml_file_name)
     nurbs_data = yaml_data['shape']
     try:
         vis_data = yaml_data['visualization']
@@ -182,7 +182,7 @@ Please see the documentation for more details.\
         sys.exit(1)
 
     # Process YAML file
-    yaml_data = helpers_yaml.read_yaml_file(yaml_file_name)
+    yaml_data = helpers_file.read_yaml_file(yaml_file_name)
     nurbs_data = yaml_data['shape']
 
     # Detect NURBS shape building function
@@ -264,7 +264,7 @@ Please see the documentation for more details.\
     export_filename = kwargs.get('name', get_default_file_name(yaml_file_name, export_type))
 
     # Process YAML file
-    yaml_data = helpers_yaml.read_yaml_file(yaml_file_name)
+    yaml_data = helpers_file.read_yaml_file(yaml_file_name)
     nurbs_data = yaml_data['shape']
 
     # Detect NURBS shape building function
