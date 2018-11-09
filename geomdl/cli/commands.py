@@ -157,7 +157,7 @@ Usage:
 Available parameters:
 
     --help      displays this message
-    --index=n   plots n-th curve or surface in the YAML file (works only for multi shapes)
+    --index=n   evaluates n-th curve or surface in the YAML file (works only for multi shapes)
     --delta=d   allows customization of the pre-defined evaluation delta in the YAML file. 0.0 < d < 1.0
     --type=csv  defines the file type (csv, txt, vtk) for exporting the evaluated points
     --name=fn   sets the file name for exporting the evaluated points
@@ -205,7 +205,7 @@ Please see the documentation for more details.\
         print("Possible values are:", types_str)
         sys.exit(1)
 
-    # Plot the NURBS object
+    # Evaluate the NURBS object
     try:
         ns = helpers_nurbs.build_nurbs_shape(data=nurbs_data['data'], build_func=build_func,
                                              shape_delta=shape_delta, shape_idx=shape_idx)
