@@ -54,6 +54,12 @@ __cli_commands__ = dict(
         func="command_eval",
         func_args=1,
     ),
+    export=dict(
+        doc="exports NURBS shapes in common CAD exchange formats",
+        module="geomdl.cli.commands",
+        func="command_export",
+        func_args=1,
+    ),
 )
 
 # Custom configuration directory

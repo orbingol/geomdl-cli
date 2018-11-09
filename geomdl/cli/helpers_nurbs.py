@@ -169,3 +169,29 @@ def export_evalpts(obj, file_name, export_type):
             for pt in obj.evalpts:
                 line = ", ".join([str(p) for p in pt])
                 print(line)
+
+
+def export_nurbs(obj, file_name, export_type):
+    """ Exports NURBS data in common CAD exchange formats.
+
+    :param obj: input curve or surface
+    :type obj: NURBS.Curve, NURBS.Surface, Multi.MultiCurve or Multi.MultiSurface
+    :param file_name: name of the export file
+    :type file_name: str
+    :param export_type: type of the export file, e.g. cfg, obj, stl, ...
+    :type export_type: str
+    """
+    if export_type == 'cfg':
+        exchange.export_cfg(obj, file_name)
+    elif export_type == 'smesh':
+        exchange.export_smesh(obj, file_name)
+    elif export_type == 'obj':
+        exchange.export_obj(obj, file_name)
+    elif export_type == 'stl':
+        exchange.export_stl(obj, file_name)
+    elif export_type == 'off':
+        exchange.export_off(obj, file_name)
+    elif export_type == 'pickle':
+        obj.save(file_name)
+    else:
+        raise NotImplementedError("The method", str(export_type), "has not been implemented yet")
