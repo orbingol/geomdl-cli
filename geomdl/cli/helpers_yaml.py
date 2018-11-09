@@ -24,7 +24,7 @@
 """
 
 #
-# YAML file parsing and template processing functions for geomdl-cli
+# File parsing and template processing functions for geomdl-cli
 #
 
 import sys
@@ -46,15 +46,15 @@ CLI_TEMPLATE_FUNCTIONS = dict(
 )
 
 
-def read_yaml_file(yaml_file):
-    """Opens a YAML file, parses it through Jinja2 and ruamel.yaml and returns a dict containing the YAML data"""
-    # Open YAML file
+def process_jinja2_template(file_name):
+    """Opens an input file, evaluates the Jinja2 template functions and returns the final file contents."""
+    # Try to open the file
     try:
-        with open(yaml_file, 'r') as fp:
-            yaml_src = fp.read()
-            yaml_src = yaml_src.replace("{%", "<%").replace("%}", "%>").replace("{{", "<{").replace("}}", "}>")
+        with open(file_name, 'r') as fp:
+            file_src = fp.read()
+            file_src = file_src.replace("{%", "<%").replace("%}", "%>").replace("{{", "<{").replace("}}", "}>")
     except IOError:
-        print("Cannot open file", str(yaml_file), "for reading. Check if the file exists.")
+        print("Cannot open file", str(file_name), "for reading. Check if the file exists.")
         sys.exit(1)
     except Exception as e:
         print("An error occurred: {}".format(e.args[-1]))
@@ -62,7 +62,7 @@ def read_yaml_file(yaml_file):
 
     # Generate Jinja2 environment
     env = jinja2.Environment(
-        loader=jinja2.DictLoader({yaml_file: yaml_src}),
+        loader=jinja2.DictLoader({file_name: file_src}),
         trim_blocks=True,
         block_start_string='<%', block_end_string='%>',
         variable_start_string='<{', variable_end_string='}>'
@@ -72,8 +72,13 @@ def read_yaml_file(yaml_file):
     for k, v in CLI_TEMPLATE_FUNCTIONS.items():
         env.globals[k] = v
 
-    # Process Jinja2 template functions & variables inside the YAML file
-    yaml_src = env.get_template(yaml_file).render()
+    # Process Jinja2 template functions & variables inside the input file
+    return env.get_template(file_name).render()
+
+
+def read_yaml_file(yaml_file):
+    """Opens a YAML file, parses it through Jinja2 and ruamel.yaml and returns a dict containing the YAML data"""
+    yaml_src = process_jinja2_template(yaml_file)
 
     # Parse YAML after Jinja2 template processing
     yaml = YAML()
