@@ -237,8 +237,8 @@ Available parameters:
     --help      displays this message
     --index=n   exports n-th curve or surface in the YAML file (works only for multi shapes)
     --delta=d   allows customization of the pre-defined evaluation delta in the YAML file. 0.0 < d < 1.0
-    --type=csv  defines the export file type
-    --name=fn   sets the export file name
+    --type=csv  defines the export file type (default: pickle)
+    --name=fn   sets the export file name (default: input path and name + new extension)
 
 Please see the documentation for more details.\
     """
