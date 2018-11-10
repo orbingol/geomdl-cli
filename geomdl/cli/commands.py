@@ -82,12 +82,14 @@ Notes:
 Please see the documentation for more details.\
     """
     def parse_vis_options(options_str):
+        row_sep = ";"
+        col_sep = ":"
         off_on = {'off': False, 'on': True}
-        options_arr = options_str.split(',')
+        options_arr = options_str.split(row_sep)
         ret_dict = {}
         print("Visualization options:")
         for idx, opt in enumerate(options_arr):
-            opt = opt.strip().split(':')
+            opt = opt.strip().split(col_sep)
             if len(opt) != 2:
                 continue
             opt[0] = opt[0].strip()
