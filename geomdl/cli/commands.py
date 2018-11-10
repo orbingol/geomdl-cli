@@ -56,14 +56,20 @@ VERSION: Displays geomdl-cli and geomdl version\
 
 def command_plot(file_name, **kwargs):
     """\
-PLOT: Plots NURBS curves and surfaces using Matplotlib
+PLOT: Plots NURBS curves and surfaces using matplotlib
+
+'geomdl-cli plot' command takes a supported file type as an input and plots the NURBS curves and/or surfaces in the \
+input file. The supported file types are: libconfig (.cfg), YAML (.yaml) and JSON (.json)
+
+The input files can be created manually or can be exported via appropriate 'geomdl' API call. Please see \
+'geomdl.exchange' documentation for importing and exporting NURBS shapes in the supported file formats.
 
 Usage:
 
-    geomdl plot {file}                             plots the complete shape defined by the file
-    geomdl plot {file} --delta=0.1                 plots the shape using the evaluation delta of 0.1
-    geomdl plot {file} --index=2                   plots the 2nd shape defined in the input file
-    geomdl plot {file} --index=1 --delta=0.025     plots the 1st shape using the evaluation delta of 0.025
+    geomdl-cli plot {file}                             plots the complete shape defined by the input file
+    geomdl-cli plot {file} --delta=0.1                 plots the shape using the evaluation delta of 0.1
+    geomdl-cli plot {file} --index=2                   plots the 2nd shape defined in the input file
+    geomdl-cli plot {file} --index=1 --delta=0.025     plots the 1st shape using the evaluation delta of 0.025
 
 Available parameters:
 
@@ -73,6 +79,18 @@ Available parameters:
     --delta=d       overrides pre-defined evaluation delta in the input fie. 0.0 < d < 1.0
     --name=fn       saves the figure as a file (the figure window will not open if this parameter is set)
     --vis           sets the visualization options
+
+Visualization options:
+
+'--vis' parameter can be used for changing visualization options. The visualization options are documented on:
+
+https://nurbs-python.readthedocs.io/en/latest/module_vis_mpl.html#geomdl.visualization.VisMPL.VisConfig
+
+The following examples illustrate some ways to input the visualization options to 'geomdl-cli':
+
+    - geomdl-cli plot {file} --vis="ctrlpts:off;axes:off"       no control points and axes are displayed
+    - geomdl-cli plot {file} --vis="legend:on"                  figure legend is displayed
+    - geomdl-cli plot {file} --vis="evalpts:off;legend:on"      surface or curve is not displayed, legend is displayed
 
 Notes:
 
@@ -136,14 +154,20 @@ def command_eval(file_name, **kwargs):
     """\
 EVAL: Evaluates NURBS curves and surfaces and prints the evaluated points or exports them as a file
 
+'geomdl-cli eval' command takes a supported file type as an input and plots the NURBS curves and/or surfaces in the \
+input file. The supported file types are: libconfig (.cfg), YAML (.yaml) and JSON (.json)
+
+The input files can be created manually or can be exported via appropriate 'geomdl' API call. Please see \
+'geomdl.exchange' documentation for importing and exporting NURBS shapes in the supported file formats.
+
 The default behavior of the command is printing the evaluated surface or curve points to the screen. For multi curves \
 and surfaces, there will be a "---" line between the evaluated points of the individual shapes. This command can also \
 export the evaluated points in various formats, such as CSV, TXT and legacy VTK.
 
 Usage:
 
-    geomdl eval {file}                                 evaluates the shape and prints the points to the screen
-    geomdl eval {file} --type=csv --name=test.csv      exports the evaluated points as a CSV file
+    geomdl-cli eval {file}                                 evaluates the shape and prints the points to the screen
+    geomdl-cli eval {file} --type=csv --name=test.csv      exports the evaluated points as a CSV file
 
 Available parameters:
 
@@ -196,12 +220,19 @@ def command_export(file_name, **kwargs):
     """\
 EXPORT: Exports NURBS curves and surfaces in supported formats
 
-Please see 'geomdl.exchange' module documentation for details on export options.
+'geomdl-cli export' command takes a supported file type as an input and plots the NURBS curves and/or surfaces in the \
+input file. The supported file types are: libconfig (.cfg), YAML (.yaml) and JSON (.json)
+
+The input files can be created manually or can be exported via appropriate 'geomdl' API call. Please see \
+'geomdl.exchange' documentation for importing and exporting NURBS shapes in the supported file formats.
+
+The following file types are supported for exporting: cfg, yaml, json, smesh, obj, stl, off. \
+Please see 'geomdl.exchange' module documentation for details on file export options.
 
 Usage:
 
-    geomdl export {file}                     exports the shape in pickle format (default)
-    geomdl export {file} --type=cfg          exports the shape in libconfig format
+    geomdl-cli export {file}                     exports the shape in pickle format (default)
+    geomdl-cli export {file} --type=cfg          exports the shape in libconfig format
 
 Available parameters:
 
