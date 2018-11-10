@@ -81,7 +81,7 @@ def create_temp_file(file_contents, file_extension):
     # Generate the temporary file
     try:
         with tempfile.NamedTemporaryFile(delete=False) as fpt:
-            fpt.write(file_contents)
+            fpt.write(file_contents.encode())
     except TypeError as e:
         print("Problem generating temporary file after template parsing")
         raise e
