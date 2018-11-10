@@ -27,6 +27,8 @@
 # NURBS evaluation and utility functions for geomdl-cli
 #
 
+import os
+import os.path
 from geomdl import __version__
 from geomdl import NURBS
 from geomdl import Multi
@@ -34,89 +36,57 @@ from geomdl import exchange
 from geomdl.visualization import VisMPL
 
 
+# File types allowed for importing
+CLI_FILE_IMPORT_TYPES =  dict(
+    cfg=exchange.import_cfg,
+    conf=exchange.import_cfg,
+    yaml=exchange.import_yaml,
+    json=exchange.import_json,
+)
+
+
 def print_version():
     """Prints geomdl version"""
     print("geomdl version", __version__)
 
 
-def build_nurbs_shape(data, build_func, shape_idx, shape_delta):
-    """Main function for generating NURBS objects from YAML files"""
-    # Apply necessary conversions
-    idx = int(shape_idx)
-    delta = float(shape_delta)
+def generate_nurbs_from_file(file_name, delta, shape_idx, file_type=''):
+    """Generates NURBS objects from supported file formats"""
+    # Fix input types
+    delta = float(delta)
+    shape_idx = int(shape_idx)
 
-    # Build NURBS shapes
-    if isinstance(data, list):
-        if len(data) == 1:
-            ns = build_func['single'](data[0])
-        elif idx >= 0:
-            ns = build_func['single'](data[idx])
+    # Try to find file type from its extension
+    if not file_type:
+        fname, fext = os.path.splitext(file_name)
+        file_type = fext[1:]
+
+    ftype = file_type.lower()
+    if ftype in CLI_FILE_IMPORT_TYPES:
+        # Build NURBS object
+        nurbs_objs = CLI_FILE_IMPORT_TYPES[ftype](file_name, delta=delta)
+
+        # Return the shape
+        if len(nurbs_objs) == 1:
+            return nurbs_objs[0]
+
+        if isinstance(nurbs_objs[0], NURBS.Curve):
+            result = Multi.MultiCurve(nurbs_objs)
         else:
-            ns = build_func['multi'](data)
+            result = Multi.MultiSurface(nurbs_objs)
+
+        # Set the delta for multi shape objects
+        if 0.0 < delta < 1.0:
+            result.delta = delta
+
+        if shape_idx >= 0:
+            return result[shape_idx]
+        return result
     else:
-        ns = build_func['single'](data)
-
-    # Set delta value
-    if delta > 0:
-        ns.delta = delta
-    return ns
+        raise RuntimeError("The input file type '" + str(file_type) + "' is not supported")
 
 
-def build_curve_single(data):
-    """Generates a NURBS curve"""
-    ns = NURBS.Curve()
-    ns.degree = data['degree']
-    try:
-        ns.ctrlpts = data['control_points']['points']
-        if 'weights' in data['control_points']:
-            ns.weights = data['control_points']['weights']
-    except KeyError:
-        ns.ctrlptsw = data['control_points']
-    ns.knotvector = data['knotvector']
-    if 'delta' in data:
-        ns.delta = data['delta']
-    return ns
-
-
-def build_curve_multi(data):
-    """Generates a NURBS multi-curve"""
-    mns = Multi.MultiCurve()
-    for d in data:
-        ns = build_curve_single(d)
-        mns.add(ns)
-    return mns
-
-
-def build_surface_single(data):
-    """Generates a NURBS surface"""
-    ns = NURBS.Surface()
-    ns.degree_u = data['degree_u']
-    ns.degree_v = data['degree_v']
-    ns.ctrlpts_size_u = data['size_u']
-    ns.ctrlpts_size_v = data['size_v']
-    try:
-        ns.ctrlpts = data['control_points']['points']
-        if 'weights' in data['control_points']:
-            ns.weights = data['control_points']['weights']
-    except KeyError:
-        ns.ctrlptsw = data['control_points']
-    ns.knotvector_u = data['knotvector_u']
-    ns.knotvector_v = data['knotvector_v']
-    if 'delta' in data:
-        ns.delta = data['delta']
-    return ns
-
-
-def build_surface_multi(data):
-    """Generates a NURBS multi-surface"""
-    mns = Multi.MultiSurface()
-    for d in data:
-        ns = build_surface_single(d)
-        mns.add(ns)
-    return mns
-
-
-def build_vis(obj, data):
+def build_vis(obj, data=dict()):
     """ Prepares visualization module for the input curve or surface.
 
     :param obj: input curve or surface
@@ -132,7 +102,7 @@ def build_vis(obj, data):
         elif obj.dimension == 3:
             obj.vis = VisMPL.VisCurve3D(vis_config)
         else:
-            raise ValueError("Can only plot 2- or 3-dimensional curves")
+            raise RuntimeError("Can only plot 2- or 3-dimensional curves")
 
     if isinstance(obj, (NURBS.Surface, Multi.MultiSurface)):
         obj.vis = VisMPL.VisSurfTriangle(vis_config)
@@ -194,4 +164,4 @@ def export_nurbs(obj, file_name, export_type):
     try:
         type_maps[export_type](obj, file_name)
     except KeyError:
-        raise NotImplementedError("The method", str(export_type), "has not been implemented yet")
+        raise RuntimeError("The export method '" + str(export_type) + "' has not been implemented yet")

@@ -27,7 +27,7 @@
 # geomdl-cli command definitions
 #
 
-import sys
+import os.path
 from . import __version__
 from . import __cli_usage__, __cli_commands__
 from . import helpers_file
@@ -54,29 +54,25 @@ VERSION: Displays geomdl-cli and geomdl version\
     helpers_nurbs.print_version()
 
 
-def command_plot(yaml_file_name, **kwargs):
+def command_plot(file_name, **kwargs):
     """\
-PLOT: Plots NURBS curves and surfaces
-
-"geomdl plot" command takes a YAML file as the input and plots the shapes defined in the file. \
-The YAML file can contain single or multiple shapes. The YAML file format is described in the geomdl-cli documentation.
-
-NURBS-Python library may be used to export curves and surfaces as YAML files. \
-Please see "geomdl.exchange.export_yaml" documentation for details.
+PLOT: Plots NURBS curves and surfaces using Matplotlib
 
 Usage:
 
-    geomdl plot {yaml_file}                             plots the shape defined in the YAML file
-    geomdl plot {yaml_file} --delta=0.1                 plots the shape using the evaluation delta of 0.1
-    geomdl plot {yaml_file} --index=2                   plots the 2nd shape defined in the YAML file
-    geomdl plot {yaml_file} --index=1 --delta=0.025     plots the 1st shape using the evaluation delta of 0.025
+    geomdl plot {file}                             plots the complete shape defined by the file
+    geomdl plot {file} --delta=0.1                 plots the shape using the evaluation delta of 0.1
+    geomdl plot {file} --index=2                   plots the 2nd shape defined in the input file
+    geomdl plot {file} --index=1 --delta=0.025     plots the 1st shape using the evaluation delta of 0.025
 
 Available parameters:
 
-    --help      displays this message
-    --index=n   plots n-th curve or surface in the YAML file (works only for multi shapes)
-    --delta=d   allows customization of the pre-defined evaluation delta in the YAML file. 0.0 < d < 1.0
-    --name=fn   sets the file name for saving the figure (the figure window will not open if this parameter is set)
+    --help          displays this message
+    --type          defines the input file type
+    --index=n       plots n-th curve or surface in the input file (works only for multi shapes)
+    --delta=d       overrides pre-defined evaluation delta in the input fie. 0.0 < d < 1.0
+    --name=fn       saves the figure as a file (the figure window will not open if this parameter is set)
+    --vis           sets visualization options
 
 Notes:
 
@@ -86,37 +82,10 @@ Notes:
 Please see the documentation for more details.\
     """
     # Get keyword arguments
+    file_type = kwargs.get('type', '')
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
     save_file_name = kwargs.get('name', None)
-
-    # Process YAML file
-    yaml_data = helpers_file.read_yaml_file(yaml_file_name)
-    nurbs_data = yaml_data['shape']
-    try:
-        vis_data = yaml_data['visualization']
-    except KeyError:
-        vis_data = {}
-
-    # Detect NURBS shape building function
-    shape_types = dict(
-        curve=dict(
-            single=helpers_nurbs.build_curve_single,
-            multi=helpers_nurbs.build_curve_multi,
-        ),
-        surface=dict(
-            single=helpers_nurbs.build_surface_single,
-            multi=helpers_nurbs.build_surface_multi,
-        ),
-    )
-
-    try:
-        build_func = shape_types[str(nurbs_data['type'])]
-    except KeyError:
-        print("Unsupported shape type: ", str(nurbs_data['type']), "\n")
-        types_str = ", ".join([k for k in shape_types.keys()])
-        print("Possible values are:", types_str)
-        sys.exit(1)
 
     # Prepare render method parameters
     if save_file_name:
@@ -124,26 +93,29 @@ Please see the documentation for more details.\
     else:
         render_params = dict(plot=True)
 
-    # Plot the NURBS object
+    # Open file and parse Jinja2 template
+    temp_fn = helpers_file.read_input_file_with_template(file_name)
+
     try:
-        ns = helpers_nurbs.build_nurbs_shape(data=nurbs_data['data'], build_func=build_func,
-                                             shape_delta=shape_delta, shape_idx=shape_idx)
-        helpers_nurbs.build_vis(obj=ns, data=vis_data)
+        # Plot the NURBS object
+        ns = helpers_nurbs.generate_nurbs_from_file(
+            file_name=temp_fn,
+            delta=shape_delta,
+            shape_idx=shape_idx,
+            file_type=file_type
+        )
+        helpers_nurbs.build_vis(obj=ns)
         ns.render(**render_params)
     except KeyError as e:
-        print("Problem with the YAML file. The following key does not exist: {}".format(e.args[-1]))
-        sys.exit(1)
-    except Exception as e:
-        print("An error occurred: {}".format(e.args[-1]))
-        sys.exit(1)
+        raise RuntimeError("Required key does not exist in the input data: {}".format(e.args[-1]))
+    finally:
+        # Close file
+        helpers_file.close_input_file(temp_fn)
 
 
-def command_eval(yaml_file_name, **kwargs):
+def command_eval(file_name, **kwargs):
     """\
-EVAL: Evaluates NURBS curves and surfaces
-
-"geomdl eval" command takes a YAML file as the input and evaluated the shapes defined in the file. \
-The YAML file can contain single or multiple shapes. The YAML file format is described in the geomdl-cli documentation.
+EVAL: Evaluates NURBS curves and surfaces and prints the evaluated points or exports them as a file
 
 The default behavior of the command is printing the evaluated surface or curve points to the screen. For multi curves \
 and surfaces, there will be a "---" line between the evaluated points of the individual shapes. This command can also \
@@ -151,150 +123,111 @@ export the evaluated points in various formats, such as CSV, TXT and legacy VTK.
 
 Usage:
 
-    geomdl eval {yaml_file}                                 evaluates the shape and prints the points to the screen
-    geomdl eval {yaml_file} --type=csv --name=test.csv      exports the evaluated points as a CSV file
+    geomdl eval {file}                                 evaluates the shape and prints the points to the screen
+    geomdl eval {file} --type=csv --name=test.csv      exports the evaluated points as a CSV file
 
 Available parameters:
 
-    --help      displays this message
-    --index=n   evaluates n-th curve or surface in the YAML file (works only for multi shapes)
-    --delta=d   allows customization of the pre-defined evaluation delta in the YAML file. 0.0 < d < 1.0
-    --type=csv  defines the file type (csv, txt, vtk) for exporting the evaluated points
-    --name=fn   sets the file name for exporting the evaluated points
+    --help          displays this message
+    --type          defines the input file type
+    --index=n       evaluates n-th curve or surface in the file (works only for multi shapes)
+    --delta=d       overrides pre-defined evaluation delta in the file. 0.0 < d < 1.0
+    --export=csv    defines the export file type (csv, txt, vtk)
+    --name=fn       sets the export file name
 
 Please see the documentation for more details.\
     """
     # Get keyword arguments
+    file_type = kwargs.get('type', '')
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
     export_filename = kwargs.get('name', None)
-    export_type = kwargs.get('type', 'screen')
+    export_type = kwargs.get('export', 'screen')
 
     # Check user input
     possible_types = ['screen', 'csv', 'txt', 'vtk']
     if export_type not in possible_types:
         ptypes_str = ", ".join([pt for pt in possible_types])
-        print("Cannot export in", str(export_type), "format. Possible types:", ptypes_str)
-        sys.exit(1)
+        raise RuntimeError("Cannot export in '" + str(export_type) + "'format. Possible types: " + ptypes_str)
 
     if export_type != 'screen' and not export_filename:
-        print("A file name is needed to export in", str(export_type), "format. Please use --name to set.")
-        sys.exit(1)
+        error_str = "A file name is needed to export in '" + str(export_type) + "' format. Please use --name to set."
+        raise RuntimeError(error_str)
 
-    # Process YAML file
-    yaml_data = helpers_file.read_yaml_file(yaml_file_name)
-    nurbs_data = yaml_data['shape']
-
-    # Detect NURBS shape building function
-    shape_types = dict(
-        curve=dict(
-            single=helpers_nurbs.build_curve_single,
-            multi=helpers_nurbs.build_curve_multi,
-        ),
-        surface=dict(
-            single=helpers_nurbs.build_surface_single,
-            multi=helpers_nurbs.build_surface_multi,
-        ),
-    )
+    # Open file and parse Jinja2 template
+    temp_fn = helpers_file.read_input_file_with_template(file_name)
 
     try:
-        build_func = shape_types[str(nurbs_data['type'])]
-    except KeyError:
-        print("Unsupported shape type: ", str(nurbs_data['type']), "\n")
-        types_str = ", ".join([k for k in shape_types.keys()])
-        print("Possible values are:", types_str)
-        sys.exit(1)
-
-    # Evaluate the NURBS object
-    try:
-        ns = helpers_nurbs.build_nurbs_shape(data=nurbs_data['data'], build_func=build_func,
-                                             shape_delta=shape_delta, shape_idx=shape_idx)
+        # Evaluate the NURBS object and display/export the evaluated points
+        ns = helpers_nurbs.generate_nurbs_from_file(
+            file_name=temp_fn,
+            delta=shape_delta,
+            shape_idx=shape_idx,
+            file_type=file_type
+        )
         helpers_nurbs.export_evalpts(obj=ns, file_name=export_filename, export_type=export_type)
     except KeyError as e:
-        print("Problem with the YAML file. The following key does not exist: {}".format(e.args[-1]))
-        sys.exit(1)
-    except Exception as e:
-        print("An error occurred: {}".format(e.args[-1]))
-        sys.exit(1)
+        raise RuntimeError("Required key does not exist in the input data: {}".format(e.args[-1]))
+    finally:
+        # Close file
+        helpers_file.close_input_file(temp_fn)
 
 
-def command_export(yaml_file_name, **kwargs):
+def command_export(file_name, **kwargs):
     """\
 EXPORT: Exports NURBS curves and surfaces in supported formats
 
-"geomdl eval" command takes a YAML file as the input and evaluated the shapes defined in the file. \
-The YAML file can contain single or multiple shapes. The YAML file format is described in the geomdl-cli documentation.
-
-Please see `geomdl.exchange' module documentation for details on export options.
+Please see 'geomdl.exchange' module documentation for details on export options.
 
 Usage:
 
-    geomdl export {yaml_file}                     exports the shape in pickle format (default)
-    geomdl export {yaml_file} --type=cfg          exports the shape in libconfig format
+    geomdl export {file}                     exports the shape in pickle format (default)
+    geomdl export {file} --type=cfg          exports the shape in libconfig format
 
 Available parameters:
 
-    --help      displays this message
-    --index=n   exports n-th curve or surface in the YAML file (works only for multi shapes)
-    --delta=d   allows customization of the pre-defined evaluation delta in the YAML file. 0.0 < d < 1.0
-    --type=csv  defines the export file type (default: pickle)
-    --name=fn   sets the export file name (default: input path and name + new extension)
+    --help          displays this message
+    --index=n       exports n-th curve or surface in the input file (works only for multi shapes)
+    --delta=d       overrides pre-defined evaluation delta in the input file. 0.0 < d < 1.0
+    --export=csv    defines the export file type (default: json)
+    --name=fn       sets the export file name (default: input path and name + new extension)
 
 Please see the documentation for more details.\
     """
-    def get_default_file_name(fname, extension):
-        fnearr = fname.split(".")
-        fnarr = fnearr[:-1]
-        fnarr.append("." + extension)
-        return "".join(fnarr)
+    def get_default_file_name(filename, extension):
+        fname, fext = os.path.splitext(filename)
+        fext = extension
+        return fname + "." + fext
 
     # Get export type keyword argument
-    export_type = kwargs.get('type', 'pickle')
+    export_type = kwargs.get('type', 'json')
 
     # Check user input
-    possible_types = ['cfg', 'smesh', 'obj', 'stl', 'off', 'pickle']
+    possible_types = ['cfg', 'json', 'smesh', 'obj', 'stl', 'off']
     if export_type not in possible_types:
         ptypes_str = ", ".join([pt for pt in possible_types])
-        print("Cannot export in", str(export_type), "format. Possible types:", ptypes_str)
-        sys.exit(1)
+        raise RuntimeError("Cannot export in '" + str(export_type) + "' format. Possible types: " + ptypes_str)
 
     # Get remaining keyword arguments
+    file_type = kwargs.get('type', '')
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
-    export_filename = kwargs.get('name', get_default_file_name(yaml_file_name, export_type))
+    export_filename = kwargs.get('name', get_default_file_name(file_name, export_type))
 
-    # Process YAML file
-    yaml_data = helpers_file.read_yaml_file(yaml_file_name)
-    nurbs_data = yaml_data['shape']
-
-    # Detect NURBS shape building function
-    shape_types = dict(
-        curve=dict(
-            single=helpers_nurbs.build_curve_single,
-            multi=helpers_nurbs.build_curve_multi,
-        ),
-        surface=dict(
-            single=helpers_nurbs.build_surface_single,
-            multi=helpers_nurbs.build_surface_multi,
-        ),
-    )
+    # Open file and parse Jinja2 template
+    temp_fn = helpers_file.read_input_file_with_template(file_name)
 
     try:
-        build_func = shape_types[str(nurbs_data['type'])]
-    except KeyError:
-        print("Unsupported shape type: ", str(nurbs_data['type']), "\n")
-        types_str = ", ".join([k for k in shape_types.keys()])
-        print("Possible values are:", types_str)
-        sys.exit(1)
-
-    # Export the NURBS object
-    try:
-        ns = helpers_nurbs.build_nurbs_shape(data=nurbs_data['data'], build_func=build_func,
-                                             shape_delta=shape_delta, shape_idx=shape_idx)
+        # Export the NURBS object
+        ns = helpers_nurbs.generate_nurbs_from_file(
+            file_name=temp_fn,
+            delta=shape_delta,
+            shape_idx=shape_idx,
+            file_type=file_type
+        )
         helpers_nurbs.export_nurbs(obj=ns, file_name=export_filename, export_type=export_type)
     except KeyError as e:
-        print("Problem with the YAML file. The following key does not exist: {}".format(e.args[-1]))
-        sys.exit(1)
-    except Exception as e:
-        print("An error occurred: {}".format(e.args[-1]))
-        sys.exit(1)
+        raise RuntimeError("Required key does not exist in the input data: {}".format(e.args[-1]))
+    finally:
+        # Close file
+        helpers_file.close_input_file(temp_fn)

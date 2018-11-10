@@ -55,7 +55,7 @@ def read_custom_config(root_dir):
         except IOError:
             print("Cannot read", config_file, "for reading. Skipping...")
         except Exception as e:
-            print("Error while reading custom configuration file {fn}: {e}".format(fn=config_file, e=e.args[-1]))
+            print("Error in reading custom configuration file {fn}: {e}".format(fn=config_file, e=e.args[-1]))
             sys.exit(1)
 
 
@@ -118,9 +118,6 @@ def main():
                 func(**command_params)
         except KeyError:
             print("Problem executing", str(sys.argv[1]).upper(), "command. Please see the documentation for details.")
-            sys.exit(1)
-        except Exception as e:
-            print("An error occurred: {}".format(e.args[-1]))
             sys.exit(1)
     except KeyError:
         print("The command", str(sys.argv[1]).upper(), "is not available. Please run '" + __cli_name__ +

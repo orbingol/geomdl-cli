@@ -27,22 +27,16 @@
 # File parsing and template processing functions for geomdl-cli
 #
 
-import sys
+import os
+import shutil
+import tempfile
+import jinja2
+from geomdl import utilities
 
-try:
-    import geomdl
-    import jinja2
-    import ruamel.yaml
-except ImportError:
-    print("You should install geomdl, Jinja2 and ruamel.yaml packages before running this script.")
-    sys.exit(1)
-
-from ruamel.yaml import YAML
-import geomdl.utilities
 
 # Define custom Jinja2 template functions
 CLI_TEMPLATE_FUNCTIONS = dict(
-    knot_vector=geomdl.utilities.generate_knot_vector,
+    knot_vector=utilities.generate_knot_vector,
 )
 
 
@@ -54,11 +48,7 @@ def process_jinja2_template(file_name):
             file_src = fp.read()
             file_src = file_src.replace("{%", "<%").replace("%}", "%>").replace("{{", "<{").replace("}}", "}>")
     except IOError:
-        print("Cannot open file", str(file_name), "for reading. Check if the file exists.")
-        sys.exit(1)
-    except Exception as e:
-        print("An error occurred: {}".format(e.args[-1]))
-        sys.exit(1)
+        raise RuntimeError("Cannot open file '" + str(file_name) + "' for reading. Check if the file exists.")
 
     # Generate Jinja2 environment
     env = jinja2.Environment(
@@ -76,13 +66,38 @@ def process_jinja2_template(file_name):
     return env.get_template(file_name).render()
 
 
-def read_yaml_file(yaml_file):
-    """Opens a YAML file, parses it through Jinja2 and ruamel.yaml and returns a dict containing the YAML data"""
-    yaml_src = process_jinja2_template(yaml_file)
+def read_input_file_with_template(file_name):
+    """Opens the input file, parses it with Jinja2 and returns the path and name of the final input file"""
+    # Jinja2 template processing
+    fsource = process_jinja2_template(file_name)
+    fname = os.path.splitext(file_name)
 
-    # Parse YAML after Jinja2 template processing
-    yaml = YAML()
-    data = yaml.load(yaml_src)
+    # Generate a temporary file and return its name
+    return create_temp_file(fsource, fname[1])
 
-    # Return parsed YAML data
-    return data
+
+def create_temp_file(file_contents, file_extension):
+    """Creates a temporary file and returns its name"""
+    # Generate the temporary file
+    try:
+        with tempfile.NamedTemporaryFile(delete=False) as fpt:
+            fpt.write(file_contents)
+    except TypeError as e:
+        print("Problem generating temporary file after template parsing")
+        raise e
+
+    # If the original file has an extension, concatenate it to the temporary file
+    if file_extension:
+        file_name = fpt.name + file_extension
+        shutil.copy(fpt.name, file_name)
+        os.unlink(fpt.name)
+    else:
+        file_name = fpt.name
+
+    # Return the temporary file and its path
+    return file_name
+
+
+def close_input_file(file_name):
+    """Deletes a file"""
+    os.unlink(file_name)
