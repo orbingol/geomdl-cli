@@ -1,5 +1,12 @@
 # geomdl-cli Changelog
 
+## 0.3.0 released on 2018-11-10
+
+* Major refactoring to the command base and the helpers
+* File reading and template processing updates
+* Added support for libconfig and JSON files
+* Documentation updates 
+
 ## 0.2.1 released on 2018-11-05
 
 * Improved `help` command output and added support for displaying user-defined command help messages
