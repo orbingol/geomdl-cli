@@ -10,6 +10,7 @@ The geomdl-cli package automatically installs the following as its dependencies:
 * `Matplotlib <https://matplotlib.org/>`_
 * `Jinja2 <https://pypi.org/project/Jinja2/>`_
 * `ruamel.yaml <https://pypi.org/project/ruamel.yaml/>`_
+* `libconf <https://pypi.org/project/libconf/>`_
 
 Although geomdl-cli is a pure Python package, it is only tested with Python v3.5.x and later.
 
