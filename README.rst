@@ -12,13 +12,15 @@ Installation
 From PyPI
 ---------
 
+Installing via `pip <https://pip.pypa.io/en/stable/>`_ is the easiest and the recommended method
+
 ``pip install geomdl.cli``
 
 From the repository
 -------------------
 
 * Clone the repository: ``git clone https://github.com/orbingol/geomdl-cli.git``
-* Inside the newly created directory, run: ``pip install .``
+* Inside the directory containing the cloned repository, run: ``pip install .``
 * The setup script will install all required dependencies
 
 Using geomdl-cli
@@ -52,7 +54,7 @@ Author
 License
 =======
 
-`MIT <LICENSE>`_
+geomdl-cli is a free and open-source software and it is licensed under the `MIT <LICENSE>`_.
 
 
 .. |RTD| image:: https://readthedocs.org/projects/geomdl-cli/badge/?version=latest
