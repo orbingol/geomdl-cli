@@ -86,16 +86,14 @@ def generate_nurbs_from_file(file_name, delta, shape_idx, file_type=''):
         raise RuntimeError("The input file type '" + str(file_type) + "' is not supported")
 
 
-def build_vis(obj, data=dict()):
+def build_vis(obj, **kwargs):
     """ Prepares visualization module for the input curve or surface.
 
     :param obj: input curve or surface
     :type obj: NURBS.Curve, NURBS.Surface, Multi.MultiCurve or Multi.MultiSurface
-    :param data: visualization options
-    :type data: dict
     :return: curve or surface updated with a visualization module
     """
-    vis_config = VisMPL.VisConfig(**data)
+    vis_config = VisMPL.VisConfig(**kwargs)
     if isinstance(obj, (NURBS.Curve, Multi.MultiCurve)):
         if obj.dimension == 2:
             obj.vis = VisMPL.VisCurve2D(vis_config)

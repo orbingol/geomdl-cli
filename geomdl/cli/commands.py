@@ -72,7 +72,7 @@ Available parameters:
     --index=n       plots n-th curve or surface in the input file (works only for multi shapes)
     --delta=d       overrides pre-defined evaluation delta in the input fie. 0.0 < d < 1.0
     --name=fn       saves the figure as a file (the figure window will not open if this parameter is set)
-    --vis           sets visualization options
+    --vis           sets the visualization options
 
 Notes:
 
@@ -81,11 +81,28 @@ Notes:
 
 Please see the documentation for more details.\
     """
+    def parse_vis_options(options_str):
+        off_on = {'off': False, 'on': True}
+        options_arr = options_str.split(',')
+        ret_dict = {}
+        print("Visualization options:")
+        for idx, opt in enumerate(options_arr):
+            opt = opt.strip().split(':')
+            if len(opt) != 2:
+                continue
+            opt[0] = opt[0].strip()
+            opt[1] = opt[1].strip()
+            if opt[1] in off_on:
+                ret_dict[opt[0]] = off_on[opt[1]]
+                print("- {k}: {v}".format(k=opt[0], v=opt[1]))
+        return ret_dict
+
     # Get keyword arguments
     file_type = kwargs.get('type', '')
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
     save_file_name = kwargs.get('name', None)
+    vis_options = kwargs.get('vis', 'legend:off')
 
     # Prepare render method parameters
     if save_file_name:
@@ -104,7 +121,7 @@ Please see the documentation for more details.\
             shape_idx=shape_idx,
             file_type=file_type
         )
-        helpers_nurbs.build_vis(obj=ns)
+        helpers_nurbs.build_vis(obj=ns, **parse_vis_options(vis_options))
         ns.render(**render_params)
     except KeyError as e:
         raise RuntimeError("Required key does not exist in the input data: {}".format(e.args[-1]))
