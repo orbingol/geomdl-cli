@@ -72,8 +72,8 @@ __cli_config__ = dict(
     user_override=False,  # True if a user configuration is loaded, False otherwise
     plot_vis="legend:off",  # visualization options for plot command (--vis parameter)
     plot_name=None,  # figure save name option for plot command (--name parameter)
-    eval_format="screen",  # export option for eval command (--export parameter)
-    export_format="json",  # export file type option for export command (--type parameter)
+    eval_format="screen",  # export option for eval command (--format parameter)
+    export_format="json",  # export file type option for export command (--format parameter)
 )
 
 # Custom configuration directory
