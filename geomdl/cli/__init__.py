@@ -69,8 +69,12 @@ __cli_commands__ = dict(
 
 # Default configuration
 __cli_config__ = dict(
-    user_override=False,
-    visualization="legend:off",
+    user_override=False,  # True if a user configuration is loaded, False otherwise
+    plot_vis="legend:off",  # visualization options for plot command (--vis parameter)
+    plot_name=None,  # figure save name option for plot command (--name parameter)
+    eval_export="screen",  # export option for eval command (--export parameter)
+    eval_name=None,  # export file name option for eval command (--name parameter)
+    export_export="json",  # export file type option for export command (--type parameter)
 )
 
 # Custom configuration directory
