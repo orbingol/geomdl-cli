@@ -108,21 +108,21 @@ def build_vis(obj, **kwargs):
     return obj
 
 
-def export_evalpts(obj, file_name, export_type):
+def export_evalpts(obj, file_name, export_format):
     """ Prints the evaluated points on the screen and optionally exports them to a file.
 
     :param obj: input curve or surface
     :type obj: NURBS.Curve, NURBS.Surface, Multi.MultiCurve or Multi.MultiSurface
     :param file_name: name of the export file
     :type file_name: str
-    :param export_type: type of the export file, e.g. txt, csv or vtk
-    :type export_type: str
+    :param export_format: export file format, e.g. txt, csv or vtk
+    :type export_format: str
     """
-    if export_type == "csv":
+    if export_format == "csv":
         exchange.export_csv(obj, file_name, point_type='evalpts')
-    elif export_type == "txt":
+    elif export_format == "txt":
         exchange.export_txt(obj, file_name, point_type='evalpts')
-    elif export_type == "vtk":
+    elif export_format == "vtk":
         exchange.export_txt(obj, file_name, point_type='evalpts')
     else:
         if isinstance(obj, Multi.Abstract.Multi):
@@ -139,15 +139,15 @@ def export_evalpts(obj, file_name, export_type):
                 print(line)
 
 
-def export_nurbs(obj, file_name, export_type):
+def export_nurbs(obj, file_name, export_format):
     """ Exports NURBS data in common CAD exchange formats.
 
     :param obj: input curve or surface
     :type obj: NURBS.Curve, NURBS.Surface, Multi.MultiCurve or Multi.MultiSurface
     :param file_name: name of the export file
     :type file_name: str
-    :param export_type: type of the export file, e.g. cfg, obj, stl, ...
-    :type export_type: str
+    :param export_format: export file format, e.g. cfg, obj, stl, ...
+    :type export_format: str
     """
     type_maps = dict(
         cfg=exchange.export_cfg,
@@ -160,6 +160,6 @@ def export_nurbs(obj, file_name, export_type):
     )
 
     try:
-        type_maps[export_type](obj, file_name)
+        type_maps[export_format](obj, file_name)
     except KeyError:
-        raise RuntimeError("The export method '" + str(export_type) + "' has not been implemented yet")
+        raise RuntimeError("The export method '" + str(export_format) + "' has not been implemented yet")

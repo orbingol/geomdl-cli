@@ -190,11 +190,7 @@ Available parameters:
 Please see the documentation for more details.\
     """
     # Get keyword arguments
-    file_type = kwargs.get('type', '')
-    shape_idx = kwargs.get('index', -1)
-    shape_delta = kwargs.get('delta', -1.0)
-    export_filename = kwargs.get('name', __cli_config__['eval_name'])
-    export_format = kwargs.get('format', __cli_config__['eval_export'])
+    export_format = kwargs.get('format', __cli_config__['eval_format'])
 
     # Check user input
     possible_types = ['screen', 'csv', 'txt', 'vtk']
@@ -202,9 +198,10 @@ Please see the documentation for more details.\
         ptypes_str = ", ".join([pt for pt in possible_types])
         raise RuntimeError("Cannot export in '" + str(export_format) + "' format. Possible types: " + ptypes_str)
 
-    if export_format != 'screen' and not export_filename:
-        error_str = "A file name is needed to export in '" + str(export_format) + "' format. Please use --name to set."
-        raise RuntimeError(error_str)
+    file_type = kwargs.get('type', '')
+    shape_idx = kwargs.get('index', -1)
+    shape_delta = kwargs.get('delta', -1.0)
+    export_filename = kwargs.get('name', helpers_file.replace_extension(file_name, export_format))
 
     # Open file and parse Jinja2 template
     temp_fn = helpers_file.read_input_file_with_template(file_name)
@@ -217,7 +214,7 @@ Please see the documentation for more details.\
             shape_idx=shape_idx,
             file_type=file_type
         )
-        helpers_nurbs.export_evalpts(obj=ns, file_name=export_filename, export_type=export_format)
+        helpers_nurbs.export_evalpts(obj=ns, file_name=export_filename, export_format=export_format)
     except KeyError as e:
         raise RuntimeError("Required key does not exist in the input data: {}".format(e.args[-1]))
     finally:
@@ -253,25 +250,20 @@ Available parameters:
 
 Please see the documentation for more details.\
     """
-    def get_default_file_name(filename, extension):
-        fname, fext = os.path.splitext(filename)
-        fext = extension
-        return fname + "." + fext
-
     # Get export type keyword argument
-    export_type = kwargs.get('export', __cli_config__['export_export'])
+    export_format = kwargs.get('format', __cli_config__['export_format'])
 
     # Check user input
     possible_types = ['cfg', 'json', 'smesh', 'obj', 'stl', 'off']
-    if export_type not in possible_types:
+    if export_format not in possible_types:
         ptypes_str = ", ".join([pt for pt in possible_types])
-        raise RuntimeError("Cannot export in '" + str(export_type) + "' format. Possible types: " + ptypes_str)
+        raise RuntimeError("Cannot export in '" + str(export_format) + "' format. Possible types: " + ptypes_str)
 
     # Get remaining keyword arguments
     file_type = kwargs.get('type', '')
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
-    export_filename = kwargs.get('name', get_default_file_name(file_name, export_type))
+    export_filename = kwargs.get('name', helpers_file.replace_extension(file_name, export_format))
 
     # Open file and parse Jinja2 template
     temp_fn = helpers_file.read_input_file_with_template(file_name)
@@ -284,7 +276,7 @@ Please see the documentation for more details.\
             shape_idx=shape_idx,
             file_type=file_type
         )
-        helpers_nurbs.export_nurbs(obj=ns, file_name=export_filename, export_type=export_type)
+        helpers_nurbs.export_nurbs(obj=ns, file_name=export_filename, export_format=export_format)
     except KeyError as e:
         raise RuntimeError("Required key does not exist in the input data: {}".format(e.args[-1]))
     finally:

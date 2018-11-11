@@ -101,3 +101,10 @@ def create_temp_file(file_contents, file_extension):
 def close_input_file(file_name):
     """Deletes a file"""
     os.unlink(file_name)
+
+
+def replace_extension(filename, extension):
+    """Replaces file extension"""
+    fname, fext = os.path.splitext(filename)
+    fext = extension
+    return fname + "." + fext
