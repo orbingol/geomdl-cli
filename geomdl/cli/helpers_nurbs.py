@@ -37,7 +37,7 @@ from geomdl.visualization import VisMPL
 
 
 # File types allowed for importing
-CLI_FILE_IMPORT_TYPES =  dict(
+CLI_FILE_IMPORT_TYPES = dict(
     cfg=exchange.import_cfg,
     conf=exchange.import_cfg,
     yaml=exchange.import_yaml,
