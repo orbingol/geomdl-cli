@@ -43,7 +43,7 @@ __cli_commands__ = dict(
         func="command_version",
     ),
     config=dict(
-        doc="displays the loaded configuration",
+        doc="displays the configuration",
         module="geomdl.cli.commands",
         func="command_config",
     ),
@@ -67,6 +67,7 @@ __cli_commands__ = dict(
     ),
 )
 
+# Default configuration
 __cli_config__ = dict(
     user_override=False,
     visualization="legend:off",

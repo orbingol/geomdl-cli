@@ -56,7 +56,7 @@ VERSION: Displays geomdl-cli and geomdl version\
 
 def command_config(**kwargs):
     """\
-CONFIG: Displays current geomdl-cli configuration\
+CONFIG: Displays geomdl-cli configuration\
     """
     print("Loaded configuration:")
     for cfg in __cli_config__.items():
