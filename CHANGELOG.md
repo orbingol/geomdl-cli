@@ -1,5 +1,9 @@
 # geomdl-cli Changelog
 
+## 0.4.2 released on 2018-11-11
+
+* Minor bug fixes and compatibility updates for user-defined configuration
+
 ## 0.4.1 released on 2018-11-11
 
 * Updated command help texts
