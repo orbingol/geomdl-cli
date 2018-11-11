@@ -82,9 +82,9 @@ Usage:
 Available parameters:
 
     --help          displays this message
-    --type          defines the input file type
+    --type=t        defines the input file type
     --index=n       plots n-th curve or surface in the input file (works only for multi shapes)
-    --delta=d       overrides pre-defined evaluation delta in the input fie. 0.0 < d < 1.0
+    --delta=d       overrides pre-defined evaluation delta in the input file (0.0 < d < 1.0)
     --name=fn       saves the figure as a file (the figure window will not open if this parameter is set)
     --vis           sets the visualization options
 
@@ -180,11 +180,11 @@ Usage:
 Available parameters:
 
     --help          displays this message
-    --type          defines the input file type
+    --type=t        defines the input file type
     --index=n       evaluates n-th curve or surface in the file (works only for multi shapes)
-    --delta=d       overrides pre-defined evaluation delta in the file. 0.0 < d < 1.0
-    --format=csv    defines the export file format (csv, txt, vtk)
-    --name=fn       sets the export file name
+    --delta=d       overrides pre-defined evaluation delta in the file (0.0 < d < 1.0)
+    --format=f      defines the export file format (f should be one of them: csv, txt or vtk)
+    --name=fn       sets the export file name (default fn = input path and name + new extension)
 
 Please see the documentation for more details.\
     """
@@ -242,10 +242,11 @@ Usage:
 Available parameters:
 
     --help          displays this message
+    --type=t        defines the input file type
     --index=n       exports n-th curve or surface in the input file (works only for multi shapes)
-    --delta=d       overrides pre-defined evaluation delta in the input file. 0.0 < d < 1.0
-    --format=csv    defines the export file type (default: json)
-    --name=fn       sets the export file name (default: input path and name + new extension)
+    --delta=d       overrides pre-defined evaluation delta in the input file (0.0 < d < 1.0)
+    --format=f      defines the export file type (default f = json)
+    --name=fn       sets the export file name (default fn = input path and name + new extension)
 
 Please see the documentation for more details.\
     """
