@@ -1,5 +1,10 @@
 # geomdl-cli Changelog
 
+## 0.4.0 released on 2018-11-11
+
+* Added ability to import user-defined configuration directives
+* Fixed inconsistencies between the command help text and the command parameters
+
 ## 0.3.0 released on 2018-11-10
 
 * Major refactoring to the command base and the helpers
