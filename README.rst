@@ -55,7 +55,7 @@ Author
 License
 =======
 
-geomdl-cli is a free and open-source software and it is licensed under the `MIT <LICENSE>`_.
+geomdl-cli is a free and open-source software and it is licensed under the MIT License.
 
 
 .. |RTD| image:: https://readthedocs.org/projects/geomdl-cli/badge/?version=latest
