@@ -45,7 +45,7 @@ is called from the command line. A command definition can contain 4 elements:
 * ``doc`` contains the text displayed when ``geomdl help`` is called
 * ``func`` is the function to be called when the command is called, e.g. ``geomdl-cli test``
 * ``func_args`` is the number of arguments that the function ``func`` takes
-* ``module`` points to the Python module that is required to import in order to call the function ``func``
+* ``module`` points to the Python module that is required to import for calling the function ``func``
 
 Configuration variables will be available in the code via the following import statement:
 
