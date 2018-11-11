@@ -27,7 +27,6 @@
 # geomdl-cli command definitions
 #
 
-import os.path
 from . import __version__
 from . import __cli_usage__, __cli_commands__, __cli_config__
 from . import helpers_file
