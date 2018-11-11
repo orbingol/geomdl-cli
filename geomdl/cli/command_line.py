@@ -113,10 +113,13 @@ def main():
         print("No commands specified. Please run '" + __cli_name__ + " help' to see the list of commands available.")
         sys.exit(0)
 
+    # Get command name
+    cmd_name = str(sys.argv[1])
+
     # Command execution
     try:
         # Load the command information from the command dictionary
-        command = __cli_commands__[sys.argv[1]]
+        command = __cli_commands__[cmd_name]
 
         # Import the module and get the function to be executed
         module = importlib.import_module(command['module'])
@@ -129,11 +132,11 @@ def main():
 
         # Run the command
         try:
-            cmd_args = command['func_args'] if 'func_args' in command else 0
+            cmd_args = int(command['func_args']) if 'func_args' in command else 0
             if cmd_args > 0:
                 if argc - 2 < cmd_args:
-                    # Print command help if there are no command arguments but expecting some
-                    print(func.__doc__)
+                    print(cmd_name.upper() + " expects " + str(cmd_args) + " argument(s). Please run '" +
+                          __cli_name__ + " " + cmd_name + " --help' for command help.")
                     sys.exit(0)
                 # Call the command with the command arguments
                 func(*sys.argv[2:], **command_params)
@@ -141,10 +144,10 @@ def main():
                 # Call the command without the command arguments
                 func(**command_params)
         except KeyError:
-            print("Problem executing", str(sys.argv[1]).upper(), "command. Please see the documentation for details.")
+            print("Problem executing " + cmd_name.upper() + " command. Please see the documentation for details.")
             sys.exit(1)
     except KeyError:
-        print("The command", str(sys.argv[1]).upper(), "is not available. Please run '" + __cli_name__ +
+        print("The command " + cmd_name.upper() + " is not available. Please run '" + __cli_name__ +
               " help' to see the list of commands available.")
         sys.exit(1)
     except Exception as e:
