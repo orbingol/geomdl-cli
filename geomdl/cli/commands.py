@@ -88,6 +88,11 @@ Available parameters:
     --name=fn       saves the figure as a file (the figure window will not open if this parameter is set)
     --vis           sets the visualization options
 
+Configuration variables:
+
+    plot_vis        default value for '--vis' parameter
+    plot_name       default value for '--name' parameter
+
 Visualization options:
 
 '--vis' parameter can be used for changing visualization options. The visualization options are documented on:
@@ -186,6 +191,10 @@ Available parameters:
     --format=f      defines the export file format (f should be one of them: screen, csv, txt or vtk)
     --name=fn       sets the export file name (default fn = input path and name + new extension)
 
+Configuration variables:
+
+    eval_format     default value for '--format' parameter
+
 Please see the documentation for more details.\
     """
     # Get keyword arguments
@@ -247,6 +256,10 @@ Available parameters:
     --delta=d       overrides pre-defined evaluation delta in the input file (0.0 < d < 1.0)
     --format=f      defines the export file type (default f = json)
     --name=fn       sets the export file name (default fn = input path and name + new extension)
+
+Configuration variables:
+
+    export_format   default value for '--format' parameter
 
 Please see the documentation for more details.\
     """
