@@ -24,7 +24,7 @@
 """
 
 #
-# Entry point definitions for Python packaging tools
+# User configuration loading functions and entry point definitions
 #
 
 import os
@@ -32,16 +32,38 @@ import os.path
 import sys
 import importlib
 import json
-from . import __cli_name__, __cli_commands__, __cli_dir__, __cli_file__
+from . import __cli_name__, __cli_commands__, __cli_config__, __cli_config_dir__, __cli_config_file__
 
 
-def read_custom_config(root_dir):
-    """ Reads custom configuration files and adds them to the command list.
+def enable_user_config(data):
+    """ Activates user configuration.
 
-    :param root_dir: root directory containing the custom configuration
+    :param data: data dictionary
+    :typr data: dict
     """
-    config_dir = os.path.join(root_dir, __cli_dir__)
-    config_file = os.path.join(config_dir, __cli_file__)
+    if 'configuration' in data:
+        __cli_config__.update(data['configuration'])
+        __cli_config__['user_override'] = True
+
+
+def enable_user_commands(data):
+    """ Activates user-defined commands.
+
+    :param data: data dictionary
+    :type data: dict
+    """
+    if 'commands' in data:
+        __cli_commands__.update(data['commands'])
+
+
+def load_custom_config(root_path):
+    """ Reads custom configuration files and makes them available for the command-line application.
+
+    :param root_path: path to the directory containing the custom configuration file
+    :type root_path: str
+    """
+    config_dir = os.path.join(root_path, __cli_config_dir__)
+    config_file = os.path.join(config_dir, __cli_config_file__)
     if os.path.isfile(config_file):
         # Add config directory to the path
         sys.path.append(config_dir)
@@ -49,9 +71,11 @@ def read_custom_config(root_dir):
         try:
             with open(config_file, 'r') as fp:
                 # Load the JSON file
-                json_str = json.load(fp)
-                # Add custom commands to the commands dictionary
-                __cli_commands__.update(json_str)
+                json_data = json.load(fp)
+                # Activate user configuration
+                enable_user_config(json_data)
+                # Activate user commands
+                enable_user_commands(json_data)
         except IOError:
             print("Cannot read", config_file, "for reading. Skipping...")
         except Exception as e:
@@ -60,12 +84,12 @@ def read_custom_config(root_dir):
 
 
 def main():
-    """Entry point for the command line application"""
+    """Entry point for the command-line application"""
     # Default user configuration directories
     user_config_root_dirs = [os.getcwd(), os.path.expanduser("~")]
     # Load user commands
     for root_dir in user_config_root_dirs:
-        read_custom_config(root_dir)
+        load_custom_config(root_dir)
 
     # Extract command parameters and update sys.argv
     command_params = {}

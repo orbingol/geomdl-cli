@@ -29,7 +29,7 @@
 
 import os.path
 from . import __version__
-from . import __cli_usage__, __cli_commands__
+from . import __cli_usage__, __cli_commands__, __cli_config__
 from . import helpers_file
 from . import helpers_nurbs
 
@@ -52,6 +52,15 @@ VERSION: Displays geomdl-cli and geomdl version\
     """
     print("geomdl-cli version", __version__)
     helpers_nurbs.print_version()
+
+
+def command_config(**kwargs):
+    """\
+CONFIG: Displays current geomdl-cli configuration\
+    """
+    print("Loaded configuration:")
+    for cfg in __cli_config__.items():
+        print("- {k}: {v}".format(k=cfg[0], v=cfg[1]))
 
 
 def command_plot(file_name, **kwargs):
@@ -122,7 +131,7 @@ Please see the documentation for more details.\
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
     save_file_name = kwargs.get('name', None)
-    vis_options = kwargs.get('vis', 'legend:off')
+    vis_options = kwargs.get('vis', __cli_config__['visualization'])
 
     # Prepare render method parameters
     if save_file_name:

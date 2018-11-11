@@ -42,6 +42,11 @@ __cli_commands__ = dict(
         module="geomdl.cli.commands",
         func="command_version",
     ),
+    config=dict(
+        doc="displays the loaded configuration",
+        module="geomdl.cli.commands",
+        func="command_config",
+    ),
     plot=dict(
         doc="plots single or multiple NURBS curves and surfaces using matplotlib",
         module="geomdl.cli.commands",
@@ -62,11 +67,16 @@ __cli_commands__ = dict(
     ),
 )
 
+__cli_config__ = dict(
+    user_override=False,
+    visualization="legend:off",
+)
+
 # Custom configuration directory
-__cli_dir__ = "." + __cli_name__
+__cli_config_dir__ = "." + __cli_name__
 
 # Custom configuration file
-__cli_file__ = __cli_name__ + ".json"
+__cli_config_file__ = "config.json"
 
 # Package help
 __cli_usage__ = """\
