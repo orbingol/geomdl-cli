@@ -4,7 +4,7 @@ What is geomdl-cli?
 Introduction
 ============
 
-**geomdl.cli** module provides a set of commands for using `geomdl <https://pypi.org/project/geomdl>`_ NURBS and
+geomdl.cli module provides a set of commands for using `geomdl <https://pypi.org/project/geomdl>`_ NURBS and
 B-spline evaluation library from the command line.
 
 The geomdl-cli package automatically installs the following as its dependencies:

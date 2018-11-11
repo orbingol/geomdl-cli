@@ -14,5 +14,5 @@ command line.
     config
     file_formats
 
-**geomdl-cli** is developed by `Onur Rauf Bingol <https://github.com/orbingol>`_ and the source code is released under
+geomdl-cli is developed by `Onur Rauf Bingol <https://github.com/orbingol>`_ and the source code is released under
 the terms of the `MIT License <https://github.com/orbingol/geomdl-cli/blob/master/LICENSE>`_.
