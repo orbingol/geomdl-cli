@@ -82,17 +82,5 @@ __cli_config_dir__ = "." + __cli_name__
 # Custom configuration file
 __cli_config_file__ = "config.json"
 
-# Package help
-__cli_usage__ = """\
-GEOMDL-CLI - Run NURBS-Python (geomdl) from the command line
-
-geomdl-cli is a command line tool for 'geomdl', a pure Python NURBS and B-Spline library.
-
-Usage:
-
-    geomdl {command} {options}
-
-Individual command help available via
-
-    geomdl {command} --help
-"""
+# Variables for user convenience
+config = __cli_config__

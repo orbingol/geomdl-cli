@@ -28,7 +28,8 @@
 #
 
 from . import __version__
-from . import __cli_usage__, __cli_commands__, __cli_config__
+from . import __cli_commands__
+from . import config
 from . import helpers_file
 from . import helpers_nurbs
 
@@ -37,8 +38,21 @@ def command_help(**kwargs):
     """\
 HELP: Displays geomdl-cli help\
     """
+    help_text = """\
+GEOMDL-CLI - Run NURBS-Python (geomdl) from the command line
+
+geomdl-cli is a command line tool for 'geomdl', a pure Python NURBS and B-Spline library.
+
+Usage:
+
+    geomdl {command} {options}
+
+Individual command help available via
+
+    geomdl {command} --help
+"""
     # Display the package help
-    print(__cli_usage__)
+    print(help_text)
     # Display all available command help messages, including the user-defined commands
     print("Available commands:\n")
     for cmd in __cli_commands__.items():
@@ -58,7 +72,7 @@ def command_config(**kwargs):
 CONFIG: Displays geomdl-cli configuration\
     """
     print("Loaded configuration:")
-    for cfg in __cli_config__.items():
+    for cfg in config.items():
         print("- {k}: {v}".format(k=cfg[0], v=cfg[1]))
 
 
@@ -134,8 +148,8 @@ Please see the documentation for more details.\
     file_type = kwargs.get('type', '')
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
-    save_file_name = kwargs.get('name', __cli_config__['plot_name'])
-    vis_options = kwargs.get('vis', __cli_config__['plot_vis'])
+    save_file_name = kwargs.get('name', config['plot_name'])
+    vis_options = kwargs.get('vis', config['plot_vis'])
 
     # Prepare render method parameters
     if save_file_name:
@@ -198,7 +212,7 @@ Configuration variables:
 Please see the documentation for more details.\
     """
     # Get keyword arguments
-    export_format = kwargs.get('format', __cli_config__['eval_format'])
+    export_format = kwargs.get('format', config['eval_format'])
 
     # Check user input
     possible_types = ['screen', 'csv', 'txt', 'vtk']
@@ -264,7 +278,7 @@ Configuration variables:
 Please see the documentation for more details.\
     """
     # Get export type keyword argument
-    export_format = kwargs.get('format', __cli_config__['export_format'])
+    export_format = kwargs.get('format', config['export_format'])
 
     # Check user input
     possible_types = ['cfg', 'json', 'smesh', 'obj', 'stl', 'off']
