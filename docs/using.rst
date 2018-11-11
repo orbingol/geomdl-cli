@@ -10,9 +10,9 @@ geomdl-cli uses the following structure for executing the commands:
 where
 
 * ``geomdl-cli`` is the name of the command line application
-* ``{command}`` corresponds to the command to be executed, such as **plot** or **eval**
+* ``{command}`` corresponds to the command to be executed, such as ``plot`` or ``eval``
 * ``{options}`` corresponds to the command input
-* ``{parameters}`` corresponds to the command parameters, such as **\--help** or **\--delta**
+* ``{parameters}`` corresponds to the command parameters, such as ``--help`` or ``--delta``
 
 Please see the individual command help for details on ``{options}`` and ``{parameters}`` values.
 
