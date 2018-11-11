@@ -183,7 +183,7 @@ Available parameters:
     --type=t        defines the input file type
     --index=n       evaluates n-th curve or surface in the file (works only for multi shapes)
     --delta=d       overrides pre-defined evaluation delta in the file (0.0 < d < 1.0)
-    --format=f      defines the export file format (f should be one of them: csv, txt or vtk)
+    --format=f      defines the export file format (f should be one of them: screen, csv, txt or vtk)
     --name=fn       sets the export file name (default fn = input path and name + new extension)
 
 Please see the documentation for more details.\
