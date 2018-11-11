@@ -15,6 +15,47 @@ with special directives discussed below. If the file doesn't exist, geomdl-cli w
 
 The following sections discuss the details of the JSON file and the customization options.
 
+Structure of the config file
+============================
+
+The config file is structured as follows:
+
+.. code-block:: json
+
+    {
+      "configuration": {
+        "test_configuration": "default configuration data"
+      },
+      "commands": {
+        "test": {
+          "doc": "documentation for the test command, it will be display when geomdl-cli help is called",
+          "module": "geomdl-test.test",
+          "func": "test_eval",
+          "func_args": "0"
+        }
+      }
+    }
+
+There are two main sections: **configuration** and **commands**, which are used to create user-defined configuration
+variables and commands for geomdl-cli.
+
+In the example above, a command named ``test`` is created and this command will be executed when ``geomdl-cli test``
+is called from the command line. A command definition can contain 4 elements:
+
+* ``doc`` contains the text displayed when ``geomdl help`` is called
+* ``func`` is the function to be called when the command is called, e.g. ``geomdl-cli test``
+* ``func_args`` is the number of arguments that the function ``func`` takes
+* ``module`` points to the Python module that is required to import in order to call the function ``func``
+
+Configuration variables will be available in the code via the following import statement:
+
+.. code-block:: python
+
+    from geomdl.cli import config
+
+``config`` is a dictionary containing the default and the user-defined configuration variables. In the example above,
+the configuration variable can be accessed using ``config['test_configuration']``.
+
 Creating commands
 =================
 
