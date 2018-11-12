@@ -56,7 +56,7 @@ Individual command help available via
     # Display all available command help messages, including the user-defined commands
     print("Available commands:\n")
     for cmd in __cli_commands__.items():
-        print("    " + cmd[0] + "\t\t" + cmd[1]['doc'])
+        print("    " + cmd[0] + "\t\t" + cmd[1]['desc'])
 
 
 def command_version(**kwargs):
