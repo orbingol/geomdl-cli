@@ -1,5 +1,13 @@
 # geomdl-cli Changelog
 
+## 0.4.3 released on 2018-11-12
+
+* Fix inconvenient variable naming in command API
+* Update `config` command output
+* Update command-line tool name in `help` command output
+* Update printed message when the command has no documentation
+* Documentation updates: https://geomdl-cli.readthedocs.io/en/latest/
+
 ## 0.4.2 released on 2018-11-11
 
 * Minor bug fixes and compatibility updates for user-defined configuration

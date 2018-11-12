@@ -24,7 +24,7 @@
 """
 
 __author__ = "Onur Rauf Bingol"
-__version__ = "0.4.2"
+__version__ = "0.4.3"
 __license__ = "MIT"
 
 # Name of the command line script
