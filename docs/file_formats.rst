@@ -1,5 +1,5 @@
-Supported File Formats and Templating
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File Formats and Templating
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Unless defined otherwise in the command help (``geomdl-cli {command} --help``), any command in need of a NURBS data
 input usse the following file formats: libconfig, YAML and JSON.
