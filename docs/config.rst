@@ -184,12 +184,63 @@ and then type **geomdl-cli test --help**.
 
     It would be good idea to put more details here...
 
-We have created a very simple command for geomdl-cli tool.
+We have successfully created a very simple command for geomdl-cli tool.
 
 Overriding commands
 ===================
 
-To be updated!
+Overriding commands is a very simple task. You might need to extend or change the functionality of an existing command,
+then overriding would be a simple option. Let's update ``config.json`` as follows:
+
+.. code-block:: json
+
+    {
+      "commands": {
+        "export": {
+          "desc": "test command description",
+          "module": "geomdl-test.test",
+          "func": "test_function",
+          "func_args": 1
+        }
+      }
+    }
+
+Please note that we changed the command name from **test** to **export** and we expect to see the output of **test**
+command when we run **geomdl-cli export**. Let's first test the change with **geomdl-cli help**:
+
+.. code-block:: console
+
+    $ geomdl-cli help
+    GEOMDL-CLI - Run NURBS-Python (geomdl) from the command line
+
+    geomdl-cli is a command line tool for 'geomdl', a pure Python NURBS and B-Spline library.
+
+    Usage:
+
+        geomdl-cli {command} {options}
+
+    Individual command help available via
+
+        geomdl-cli {command} --help
+
+    Available commands:
+
+        help                displays the help message
+        version             displays the package version
+        config              displays the configuration
+        plot                plots single or multiple NURBS curves and surfaces using matplotlib
+        eval                evaluates NURBS shapes and exports the evaluated points in various formats
+        export              test command description
+
+Have you noticed the change in **export** command's description text? Let's try it again with one of our previous
+examples:
+
+.. code-block:: console
+
+    $ geomdl-cli export testing_input
+    my test function prints testing_input
+
+We have successfully overridden an existing geomdl-cli command.
 
 Creating configuration variables
 ================================
