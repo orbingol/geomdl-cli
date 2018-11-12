@@ -45,11 +45,11 @@ geomdl-cli is a command line tool for 'geomdl', a pure Python NURBS and B-Spline
 
 Usage:
 
-    geomdl {command} {options}
+    geomdl-cli {command} {options}
 
 Individual command help available via
 
-    geomdl {command} --help
+    geomdl-cli {command} --help
 """
     # Display the package help
     print(help_text)
