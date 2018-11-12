@@ -127,7 +127,8 @@ def main():
 
         # Print command help if "--help" is present in the command arguments
         if "help" in command_params:
-            print(func.__doc__)
+            func_doc = func.__doc__ if func.__doc__ else "No help available for " + cmd_name.upper() + " command"
+            print(func_doc)
             sys.exit(0)
 
         # Run the command
