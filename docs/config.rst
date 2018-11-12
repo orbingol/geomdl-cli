@@ -29,8 +29,8 @@ The config file is structured as follows:
       "commands": {
         "test": {
           "desc": "command description, displayed when 'geomdl-cli help' is called",
-          "module": "geomdl-test.test",
-          "func": "test_eval",
+          "module": "geomdl-test.test_module",
+          "func": "test_function",
           "func_args": "0"
         }
       }
