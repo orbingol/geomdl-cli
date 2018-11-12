@@ -71,7 +71,7 @@ def command_config(**kwargs):
     """\
 CONFIG: Displays geomdl-cli configuration\
     """
-    print("Loaded configuration:")
+    print("Configuration variables:")
     for cfg in config.items():
         print("- {k}: {v}".format(k=cfg[0], v=cfg[1]))
 
