@@ -245,9 +245,96 @@ We have successfully overridden an existing geomdl-cli command.
 Creating configuration variables
 ================================
 
-To be updated!
+A configuration variable can be used to store default values for your custom command. Custom configuration variables are
+also defined in ``config.json`` file:
+
+.. code-block:: json
+
+    {
+      "configuration": {
+        "test_configuration": "default configuration text"
+      },
+      "commands": {
+        "test": {
+          "desc": "test command description",
+          "module": "geomdl-test.test",
+          "func": "test_function",
+        }
+      }
+    }
+
+Let's update ``test.py`` file as follows:
+
+.. code-block:: python
+
+    from geomdl.cli import config
+
+    def test_function(**kwargs):
+        print("The value of the config variable is '" + config['test_configuration'] + "'")
+
+Have you noticed that **test_configuration** is a key defined under **configuration** in ``config.json``? Then, let's
+test the command output:
+
+.. code-block:: console
+
+    $ geomdl-cli test
+    The value of the config variable is 'default configuration text'
+
+Additionally, you can find the list of active configuration variables by typing **geomdl-cli config**.
+
+.. code-block:: console
+
+    $ geomdl-cli config
+    Configuration variables:
+    - user_override: True
+    - plot_vis: legend:off
+    - plot_name: None
+    - eval_format: screen
+    - export_format: json
+    - test_configuration: default configuration text
+
+You can check `commands.py <https://github.com/orbingol/geomdl-cli/blob/master/geomdl/cli/commands.py>`_ file for
+examples on using configuration variables.
 
 Overriding configuration variables
 ==================================
 
-To be updated!
+Overriding configuration variables is very similar to overriding commands. For instance, **plot_vis** is a configuration
+variable used by **plot** command. It defines the visualization configuration, such as displaying and hiding figure
+elements, like legend, axes, control points grid/polygon. The default configuration can be displayed by running
+**geomdl-cli config** command:
+
+.. code-block:: console
+
+    $ geomdl-cli config
+    Configuration variables:
+    - user_override: False
+    - plot_vis: legend:off
+    - plot_name: None
+    - eval_format: screen
+    - export_format: json
+
+Let's update ``config.json`` file as follows and override the value of **plot_vis** configuration variable:
+
+.. code-block:: json
+
+    {
+      "configuration": {
+        "plot_vis": "legend:on;ctrlpts:off"
+      }
+    }
+
+To verify the change, we can run **geomdl-cli config** command:
+
+.. code-block:: console
+
+    $ geomdl-cli config
+    Configuration variables:
+    - user_override: True
+    - plot_vis: legend:on;ctrlpts:off
+    - plot_name: None
+    - eval_format: screen
+    - export_format: json
+
+If geomdl-cli loads the configuration variables from ``config.json`` file, the value of **user_override** variable
+changes to ``True``.
