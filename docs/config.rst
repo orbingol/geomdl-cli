@@ -42,7 +42,7 @@ variables and commands for geomdl-cli.
 In the example above, a command named ``test`` is created and this command will be executed when ``geomdl-cli test``
 is called from the command line. A command definition can contain 4 elements:
 
-* ``doc`` contains the text displayed when ``geomdl help`` is called
+* ``desc`` contains the command description text displayed when ``geomdl help`` is called
 * ``func`` is the function to be called when the command is called, e.g. ``geomdl-cli test``
 * ``func_args`` is the number of arguments that the function ``func`` takes
 * ``module`` points to the Python module that is required to import for calling the function ``func``
