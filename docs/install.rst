@@ -10,5 +10,5 @@ The recommended method for installation is using `pip <https://pypi.org/project/
 Alternatively, you can install the latest development version from the GitHub repository:
 
 * Clone the repository: ``git clone https://github.com/orbingol/geomdl-cli.git``
-* Inside the newly created directory, run: ``pip install .``
+* Inside the directory containing the cloned repository, run: ``pip install .``
 * The setup script will install all required dependencies
