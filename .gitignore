@@ -8,10 +8,3 @@ docs/_static/*
 !docs/_static/.gitkeep
 .geomdl-cli/*
 *.pyc
-*.out
-*.txt
-*.csv
-*.c
-*.cpp
-*.so
-*.pyd
