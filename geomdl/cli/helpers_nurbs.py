@@ -90,7 +90,7 @@ def build_vis(obj, **kwargs):
     """ Prepares visualization module for the input curve or surface.
 
     :param obj: input curve or surface
-    :type obj: NURBS.Curve, NURBS.Surface, Multi.MultiCurve or Multi.MultiSurface
+    :type obj: NURBS.Curve, NURBS.Surface, Multi.CurveContainer or Multi.SurfaceContainer
     :return: curve or surface updated with a visualization module
     """
     vis_config = VisMPL.VisConfig(**kwargs)
@@ -112,7 +112,7 @@ def export_evalpts(obj, file_name, export_format):
     """ Prints the evaluated points on the screen and optionally exports them to a file.
 
     :param obj: input curve or surface
-    :type obj: NURBS.Curve, NURBS.Surface, Multi.MultiCurve or Multi.MultiSurface
+    :type obj: NURBS.Curve, NURBS.Surface, Multi.CurveContainer or Multi.SurfaceContainer
     :param file_name: name of the export file
     :type file_name: str
     :param export_format: export file format, e.g. txt, csv or vtk
@@ -143,7 +143,7 @@ def export_nurbs(obj, file_name, export_format):
     """ Exports NURBS data in common CAD exchange formats.
 
     :param obj: input curve or surface
-    :type obj: NURBS.Curve, NURBS.Surface, Multi.MultiCurve or Multi.MultiSurface
+    :type obj: NURBS.Curve, NURBS.Surface, Multi.CurveContainer or Multi.SurfaceContainer
     :param file_name: name of the export file
     :type file_name: str
     :param export_format: export file format, e.g. cfg, obj, stl, ...
