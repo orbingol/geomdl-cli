@@ -5,12 +5,12 @@
 shape:
   type: curve
   data:
-    degree: {{ degree }}
-    knotvector: {{ knot_vector }}
-    control_points:
-      points:
-        - [10, 5, 10]
-        - [10, 20, -30]
-        - [40, 10, 25]
-        - [-10, 5, 0]
-    #delta: 0.05
+    - degree: {{ degree }}
+      knotvector: {{ knot_vector }}
+      control_points:
+        points:
+          - [10, 5, 10]
+          - [10, 20, -30]
+          - [40, 10, 25]
+          - [-10, 5, 0]
+      # delta: 0.05
