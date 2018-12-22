@@ -31,7 +31,7 @@ import os
 import os.path
 from geomdl import __version__
 from geomdl import NURBS
-from geomdl import Multi
+from geomdl import multi
 from geomdl import exchange
 from geomdl.visualization import VisMPL
 
@@ -71,9 +71,9 @@ def generate_nurbs_from_file(file_name, delta, shape_idx, file_type=''):
             return nurbs_objs[0]
 
         if isinstance(nurbs_objs[0], NURBS.Curve):
-            result = Multi.MultiCurve(nurbs_objs)
+            result = multi.CurveContainer(nurbs_objs)
         else:
-            result = Multi.MultiSurface(nurbs_objs)
+            result = multi.SurfaceContainer(nurbs_objs)
 
         # Set the delta for multi shape objects
         if 0.0 < delta < 1.0:
@@ -94,7 +94,7 @@ def build_vis(obj, **kwargs):
     :return: curve or surface updated with a visualization module
     """
     vis_config = VisMPL.VisConfig(**kwargs)
-    if isinstance(obj, (NURBS.Curve, Multi.MultiCurve)):
+    if isinstance(obj, (NURBS.Curve, multi.CurveContainer)):
         if obj.dimension == 2:
             obj.vis = VisMPL.VisCurve2D(vis_config)
         elif obj.dimension == 3:
@@ -102,7 +102,7 @@ def build_vis(obj, **kwargs):
         else:
             raise RuntimeError("Can only plot 2- or 3-dimensional curves")
 
-    if isinstance(obj, (NURBS.Surface, Multi.MultiSurface)):
+    if isinstance(obj, (NURBS.Surface, multi.SurfaceContainer)):
         obj.vis = VisMPL.VisSurfTriangle(vis_config)
 
     return obj
@@ -115,17 +115,15 @@ def export_evalpts(obj, file_name, export_format):
     :type obj: NURBS.Curve, NURBS.Surface, Multi.CurveContainer or Multi.SurfaceContainer
     :param file_name: name of the export file
     :type file_name: str
-    :param export_format: export file format, e.g. txt, csv or vtk
+    :param export_format: export file format, e.g. txt or csv
     :type export_format: str
     """
     if export_format == "csv":
         exchange.export_csv(obj, file_name, point_type='evalpts')
     elif export_format == "txt":
         exchange.export_txt(obj, file_name, point_type='evalpts')
-    elif export_format == "vtk":
-        exchange.export_txt(obj, file_name, point_type='evalpts')
     else:
-        if isinstance(obj, Multi.Abstract.Multi):
+        if isinstance(obj, multi.AbstractContainer):
             sz = len(obj)
             for idx, opt in enumerate(obj.evalpts):
                 for pt in opt:
