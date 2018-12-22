@@ -153,6 +153,8 @@ def main():
         sys.exit(1)
     except Exception as e:
         print("An error occurred: {}".format(e.args[-1]))
+        if "debug" in command_params:
+            import traceback; traceback.print_exc()
         sys.exit(1)
 
     # Command execution completed
