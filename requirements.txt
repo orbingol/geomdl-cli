@@ -1,4 +1,4 @@
-geomdl>=4.4.0
+geomdl>=5.0b1
 Jinja2>=2.10
 ruamel.yaml>=0.15
 matplotlib==2.2.3
