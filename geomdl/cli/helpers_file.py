@@ -31,13 +31,7 @@ import os
 import shutil
 import tempfile
 import jinja2
-from geomdl import utilities
-
-
-# Define custom Jinja2 template functions
-CLI_TEMPLATE_FUNCTIONS = dict(
-    knot_vector=utilities.generate_knot_vector,
-)
+from .helpers_template import get_template_functions
 
 
 def process_jinja2_template(file_name):
@@ -59,7 +53,7 @@ def process_jinja2_template(file_name):
     )
 
     # Load custom functions into the Jinja2 environment
-    for k, v in CLI_TEMPLATE_FUNCTIONS.items():
+    for k, v in get_template_functions().items():
         env.globals[k] = v
 
     # Process Jinja2 template functions & variables inside the input file
