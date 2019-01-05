@@ -157,24 +157,15 @@ Please see the documentation for more details.\
     else:
         render_params = dict(plot=True)
 
-    # Open file and parse Jinja2 template
-    temp_fn = helpers_file.read_input_file_with_template(file_name)
-
-    try:
-        # Plot the NURBS object
-        ns = helpers_nurbs.generate_nurbs_from_file(
-            file_name=temp_fn,
-            delta=shape_delta,
-            shape_idx=shape_idx,
-            file_type=file_type
-        )
-        helpers_nurbs.build_vis(obj=ns, **parse_vis_options(vis_options))
-        ns.render(**render_params)
-    except KeyError as e:
-        raise RuntimeError("Required key does not exist in the input data: {}".format(e.args[-1]))
-    finally:
-        # Close file
-        helpers_file.close_input_file(temp_fn)
+    # Plot the NURBS object
+    ns = helpers_nurbs.generate_nurbs_from_file(
+        file_name=file_name,
+        delta=shape_delta,
+        shape_idx=shape_idx,
+        file_type=file_type
+    )
+    helpers_nurbs.build_vis(obj=ns, **parse_vis_options(vis_options))
+    ns.render(**render_params)
 
 
 def command_eval(file_name, **kwargs):
@@ -225,23 +216,14 @@ Please see the documentation for more details.\
     shape_delta = kwargs.get('delta', -1.0)
     export_filename = kwargs.get('name', helpers_file.replace_extension(file_name, export_format))
 
-    # Open file and parse Jinja2 template
-    temp_fn = helpers_file.read_input_file_with_template(file_name)
-
-    try:
-        # Evaluate the NURBS object and display/export the evaluated points
-        ns = helpers_nurbs.generate_nurbs_from_file(
-            file_name=temp_fn,
-            delta=shape_delta,
-            shape_idx=shape_idx,
-            file_type=file_type
-        )
-        helpers_nurbs.export_evalpts(obj=ns, file_name=export_filename, export_format=export_format)
-    except KeyError as e:
-        raise RuntimeError("Required key does not exist in the input data: {}".format(e.args[-1]))
-    finally:
-        # Close file
-        helpers_file.close_input_file(temp_fn)
+    # Evaluate the NURBS object and display/export the evaluated points
+    ns = helpers_nurbs.generate_nurbs_from_file(
+        file_name=file_name,
+        delta=shape_delta,
+        shape_idx=shape_idx,
+        file_type=file_type
+    )
+    helpers_nurbs.export_evalpts(obj=ns, file_name=export_filename, export_format=export_format)
 
 
 def command_export(file_name, **kwargs):
@@ -292,20 +274,13 @@ Please see the documentation for more details.\
     shape_delta = kwargs.get('delta', -1.0)
     export_filename = kwargs.get('name', helpers_file.replace_extension(file_name, export_format))
 
-    # Open file and parse Jinja2 template
-    temp_fn = helpers_file.read_input_file_with_template(file_name)
+    # Export the NURBS object
+    ns = helpers_nurbs.generate_nurbs_from_file(
+        file_name=file_name,
+        delta=shape_delta,
+        shape_idx=shape_idx,
+        file_type=file_type
+    )
+    helpers_nurbs.export_nurbs(obj=ns, file_name=export_filename, export_format=export_format)
 
-    try:
-        # Export the NURBS object
-        ns = helpers_nurbs.generate_nurbs_from_file(
-            file_name=temp_fn,
-            delta=shape_delta,
-            shape_idx=shape_idx,
-            file_type=file_type
-        )
-        helpers_nurbs.export_nurbs(obj=ns, file_name=export_filename, export_format=export_format)
-    except KeyError as e:
-        raise RuntimeError("Required key does not exist in the input data: {}".format(e.args[-1]))
-    finally:
-        # Close file
-        helpers_file.close_input_file(temp_fn)
+
