@@ -45,6 +45,13 @@ CLI_FILE_IMPORT_TYPES = dict(
 )
 
 
+def replace_extension(filename, extension):
+    """Replaces file extension"""
+    fname, fext = os.path.splitext(filename)
+    fext = extension
+    return fname + "." + fext
+
+
 def print_version():
     """Prints geomdl version"""
     print("geomdl version", __version__)

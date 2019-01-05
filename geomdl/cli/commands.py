@@ -26,12 +26,10 @@
 #
 # geomdl-cli command definitions
 #
-
 from . import __version__
 from . import __cli_commands__
 from . import config
-from . import helpers_file
-from . import helpers_nurbs
+from . import utilities
 
 
 def command_help(**kwargs):
@@ -64,7 +62,7 @@ def command_version(**kwargs):
 VERSION: Displays geomdl-cli and geomdl version\
     """
     print("geomdl-cli version", __version__)
-    helpers_nurbs.print_version()
+    utilities.print_version()
 
 
 def command_config(**kwargs):
@@ -158,13 +156,13 @@ Please see the documentation for more details.\
         render_params = dict(plot=True)
 
     # Plot the NURBS object
-    ns = helpers_nurbs.generate_nurbs_from_file(
+    ns = utilities.generate_nurbs_from_file(
         file_name=file_name,
         delta=shape_delta,
         shape_idx=shape_idx,
         file_type=file_type
     )
-    helpers_nurbs.build_vis(obj=ns, **parse_vis_options(vis_options))
+    utilities.build_vis(obj=ns, **parse_vis_options(vis_options))
     ns.render(**render_params)
 
 
@@ -214,16 +212,16 @@ Please see the documentation for more details.\
     file_type = kwargs.get('type', '')
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
-    export_filename = kwargs.get('name', helpers_file.replace_extension(file_name, export_format))
+    export_filename = kwargs.get('name', utilities.replace_extension(file_name, export_format))
 
     # Evaluate the NURBS object and display/export the evaluated points
-    ns = helpers_nurbs.generate_nurbs_from_file(
+    ns = utilities.generate_nurbs_from_file(
         file_name=file_name,
         delta=shape_delta,
         shape_idx=shape_idx,
         file_type=file_type
     )
-    helpers_nurbs.export_evalpts(obj=ns, file_name=export_filename, export_format=export_format)
+    utilities.export_evalpts(obj=ns, file_name=export_filename, export_format=export_format)
 
 
 def command_export(file_name, **kwargs):
@@ -272,15 +270,15 @@ Please see the documentation for more details.\
     file_type = kwargs.get('type', '')
     shape_idx = kwargs.get('index', -1)
     shape_delta = kwargs.get('delta', -1.0)
-    export_filename = kwargs.get('name', helpers_file.replace_extension(file_name, export_format))
+    export_filename = kwargs.get('name', utilities.replace_extension(file_name, export_format))
 
     # Export the NURBS object
-    ns = helpers_nurbs.generate_nurbs_from_file(
+    ns = utilities.generate_nurbs_from_file(
         file_name=file_name,
         delta=shape_delta,
         shape_idx=shape_idx,
         file_type=file_type
     )
-    helpers_nurbs.export_nurbs(obj=ns, file_name=export_filename, export_format=export_format)
+    utilities.export_nurbs(obj=ns, file_name=export_filename, export_format=export_format)
 
 
