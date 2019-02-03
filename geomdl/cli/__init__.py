@@ -48,19 +48,19 @@ __cli_commands__ = dict(
         func="command_config",
     ),
     plot=dict(
-        desc="plots single or multiple NURBS curves and surfaces using matplotlib",
+        desc="plots single or multiple NURBS curves and surfaces using Matplotlib",
         module="geomdl.cli.commands",
         func="command_plot",
         func_args=1,
     ),
     eval=dict(
-        desc="evaluates NURBS shapes and exports the evaluated points in various formats",
+        desc="evaluates NURBS shapes and exports the evaluated points in supported formats",
         module="geomdl.cli.commands",
         func="command_eval",
         func_args=1,
     ),
     export=dict(
-        desc="exports NURBS shapes in common CAD exchange formats",
+        desc="exports NURBS shapes in supported CAD exchange formats",
         module="geomdl.cli.commands",
         func="command_export",
         func_args=1,

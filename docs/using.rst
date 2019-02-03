@@ -10,7 +10,7 @@ geomdl-cli uses the following structure for executing the commands:
 where
 
 * ``geomdl-cli`` is the name of the command line application
-* ``{command}`` corresponds to the command to be executed, such as ``plot`` or ``eval``
+* ``{command}`` corresponds to the command to be executed, see the list below
 * ``{options}`` corresponds to the command input
 * ``{parameters}`` corresponds to the command parameters, such as ``--help`` or ``--delta``
 
@@ -19,11 +19,12 @@ Please see the individual command help for details on ``{options}`` and ``{param
 Available commands
 ==================
 
-The following command displays all default and user-defined commands along with a basic command usage information.
-
-.. code-block:: console
-
-    geomdl-cli help
+* ``help``: displays the help message
+* ``version``: displays the package version
+* ``config``: displays the configuration
+* ``plot``: plots single or multiple NURBS curves and surfaces using `Matplotlib <https://matplotlib.org>`_
+* ``eval``: evaluates NURBS shapes and exports the evaluated points in supported formats
+* ``export``: exports NURBS shapes in supported CAD exchange formats
 
 Individual command help
 =======================
