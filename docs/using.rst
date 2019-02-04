@@ -48,3 +48,9 @@ extension, the input file format must be defined manually via ``--type`` paramet
     geomdl-cli {command} my_file --type=yaml
 
 Supported input file formats: yaml, cfg, json
+
+Examples
+========
+
+Please check the `GitHub repository <https://github.com/orbingol/geomdl-cli/tree/master/examples>`_ for example input
+files.

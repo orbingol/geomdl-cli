@@ -56,7 +56,7 @@ Author
 License
 =======
 
-geomdl-cli is licensed under the MIT License.
+geomdl-cli is licensed under the `MIT License <https://github.com/orbingol/geomdl-cli/blob/master/LICENSE>`_
 
 
 .. |RTD| image:: https://readthedocs.org/projects/geomdl-cli/badge/?version=latest
