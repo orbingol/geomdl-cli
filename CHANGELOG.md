@@ -1,5 +1,10 @@
 # geomdl-cli Changelog
 
+## v0.5.2 released on 2019-02-03
+
+* Clean the code and use use functions from geomdl v5.0b5
+* Compatibility and documentation updates
+
 ## v0.5.1 released on 2018-12-28
 
 * Port Jinja2 template functions from geomdl v5.0b3
