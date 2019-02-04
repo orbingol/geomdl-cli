@@ -45,6 +45,13 @@ CLI_FILE_IMPORT_TYPES = dict(
 )
 
 
+def replace_extension(filename, extension):
+    """Replaces file extension"""
+    fname, fext = os.path.splitext(filename)
+    fext = extension
+    return fname + "." + fext
+
+
 def print_version():
     """Prints geomdl version"""
     print("geomdl version", __version__)
@@ -64,7 +71,7 @@ def generate_nurbs_from_file(file_name, delta, shape_idx, file_type=''):
     ftype = file_type.lower()
     if ftype in CLI_FILE_IMPORT_TYPES:
         # Build NURBS object
-        nurbs_objs = CLI_FILE_IMPORT_TYPES[ftype](file_name, delta=delta)
+        nurbs_objs = CLI_FILE_IMPORT_TYPES[ftype](file_name, delta=delta, jinja2=True)
 
         # Return the shape
         if len(nurbs_objs) == 1:
@@ -72,8 +79,10 @@ def generate_nurbs_from_file(file_name, delta, shape_idx, file_type=''):
 
         if isinstance(nurbs_objs[0], NURBS.Curve):
             result = multi.CurveContainer(nurbs_objs)
-        else:
+        elif isinstance(nurbs_objs[0], NURBS.Surface):
             result = multi.SurfaceContainer(nurbs_objs)
+        else:
+            result = multi.VolumeContainer(nurbs_objs)
 
         # Set the delta for multi shape objects
         if 0.0 < delta < 1.0:
@@ -87,11 +96,10 @@ def generate_nurbs_from_file(file_name, delta, shape_idx, file_type=''):
 
 
 def build_vis(obj, **kwargs):
-    """ Prepares visualization module for the input curve or surface.
+    """ Prepares visualization module for the input spline geometry.
 
-    :param obj: input curve or surface
-    :type obj: NURBS.Curve, NURBS.Surface, Multi.CurveContainer or Multi.SurfaceContainer
-    :return: curve or surface updated with a visualization module
+    :param obj: input spline geometry object
+    :return: spline geometry object updated with a visualization module
     """
     vis_config = VisMPL.VisConfig(**kwargs)
     if isinstance(obj, (NURBS.Curve, multi.CurveContainer)):
@@ -103,7 +111,10 @@ def build_vis(obj, **kwargs):
             raise RuntimeError("Can only plot 2- or 3-dimensional curves")
 
     if isinstance(obj, (NURBS.Surface, multi.SurfaceContainer)):
-        obj.vis = VisMPL.VisSurfTriangle(vis_config)
+        obj.vis = VisMPL.VisSurface(vis_config)
+
+    if isinstance(obj, (NURBS.Volume, multi.VolumeContainer)):
+        obj.vis = VisMPL.VisVolume(vis_config)
 
     return obj
 
@@ -140,8 +151,7 @@ def export_evalpts(obj, file_name, export_format):
 def export_nurbs(obj, file_name, export_format):
     """ Exports NURBS data in common CAD exchange formats.
 
-    :param obj: input curve or surface
-    :type obj: NURBS.Curve, NURBS.Surface, Multi.CurveContainer or Multi.SurfaceContainer
+    :param obj: input spline geometry
     :param file_name: name of the export file
     :type file_name: str
     :param export_format: export file format, e.g. cfg, obj, stl, ...

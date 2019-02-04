@@ -28,11 +28,7 @@ Why geomdl-cli?
 Author
 ======
 
-Onur Rauf Bingol
-
-* E-mail: contact@onurbingol.net
-* Twitter: https://twitter.com/orbingol
-* LinkedIn: https://www.linkedin.com/in/onurraufbingol/
+* Onur R. Bingol (`@orbingol <https://github.com/orbingol>`_)
 
 License
 =======

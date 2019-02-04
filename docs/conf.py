@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath('../'))
 # -- Project information -----------------------------------------------------
 
 project = 'geomdl-cli'
-copyright = '2018, Onur Rauf Bingol'
+copyright = '2018-2019, Onur Rauf Bingol'
 author = 'Onur Rauf Bingol'
 description = u'Run geomdl from the command line'
 
@@ -114,7 +114,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'geomdl-clidoc'
+htmlhelp_basename = 'geomdl-cli_doc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
