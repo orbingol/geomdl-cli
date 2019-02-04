@@ -34,9 +34,9 @@ Available commands
 * **help:** displays the package help text, e.g. available commands, how to use them, etc.
 * **version:** displays the package version
 * **config:** displays the configuration
-* **plot:** plots single or multiple NURBS curves and surfaces using matplotlib
-* **eval:** evaluates NURBS shapes and exports the evaluated points in various formats, e.g. csv, txt and vtk
-* **export:** exports NURBS shapes in common CAD exchange formats
+* **plot:** plots single or multiple NURBS curves and surfaces using Matplotlib
+* **eval:** evaluates NURBS shapes and exports the evaluated points in supported formats, e.g. csv, txt and vtk
+* **export:** exports NURBS shapes in supported CAD exchange formats
 
 Individual command help
 -----------------------
