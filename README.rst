@@ -14,7 +14,17 @@ From PyPI
 
 Installing via `pip <https://pip.pypa.io/en/stable/>`_ is the easiest and the recommended method
 
-``pip install geomdl.cli``
+.. code-block:: console
+
+    $ pip install geomdl.cli
+
+
+If you are getting permission errors on Linux, you can use ``--user`` switch to install to current user's package
+directory.
+
+.. code-block:: console
+
+    $ pip install --user geomdl.cli
 
 From the repository
 -------------------
@@ -26,7 +36,19 @@ From the repository
 Using geomdl-cli
 ================
 
+After the package installation, the command-line application ``geomdl-cli`` will be automatically available. If you are
+getting file not found errors, please make sure that Python and its scripts directory is listed under the PATH
+environmental variable.
+
+The following structure explains the most basic usage of the command-line application.
+
 ``geomdl-cli {command} {options}``
+
+``{command}`` represents the functionality that ``geomdl-cli`` application will be running. Please refer to the list
+below for the commands which come with the package by default.
+
+``{options}`` represents the parameters that is being input to the command. Every command comes with a different set of
+options. Please refer to the individual command help for more details.
 
 Available commands
 ------------------
