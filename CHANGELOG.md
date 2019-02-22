@@ -1,5 +1,9 @@
 # geomdl-cli Changelog
 
+## v0.5.3 released on 2019-02-21
+
+* Update dependency to geomdl v5.0.0
+
 ## v0.5.2 released on 2019-02-03
 
 * Clean the code and use use functions from geomdl v5.0b5
