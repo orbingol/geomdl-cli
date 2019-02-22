@@ -1,7 +1,7 @@
 """
 
     geomdl-cli - Run NURBS-Python (geomdl) from the command line
-    Copyright (c) 2018 Onur Rauf Bingol <orbingol@gmail.com>
+    Copyright (c) 2018-2019 Onur Rauf Bingol <orbingol@gmail.com>
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ data = dict(
     url='https://github.com/orbingol/geomdl-cli',
     keywords='NURBS B-Spline curve surface CAD modeling visualization surface-generator',
     packages=['geomdl.cli'],
-    install_requires=['geomdl>=5.0b5', 'matplotlib', 'Jinja2>=2.10', 'ruamel.yaml>=0.15', 'libconf'],
+    install_requires=['geomdl>=5.0.0', 'matplotlib', 'Jinja2>=2.10', 'ruamel.yaml>=0.15', 'libconf'],
     entry_points={
         'console_scripts': ['geomdl-cli=geomdl.cli.command_line:main'],
     },
