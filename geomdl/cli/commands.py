@@ -261,7 +261,7 @@ Please see the documentation for more details.\
     export_format = kwargs.get('format', config['export_format'])
 
     # Check user input
-    possible_types = ['cfg', 'json', 'smesh', 'obj', 'stl', 'off']
+    possible_types = ['cfg', 'yaml', 'json', 'obj', 'stl', 'off', 'smesh', 'vmesh']
     if export_format not in possible_types:
         ptypes_str = ", ".join([pt for pt in possible_types])
         raise RuntimeError("Cannot export in '" + str(export_format) + "' format. Possible types: " + ptypes_str)

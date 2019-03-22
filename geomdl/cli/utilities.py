@@ -161,10 +161,11 @@ def export_nurbs(obj, file_name, export_format):
         cfg=exchange.export_cfg,
         yaml=exchange.export_yaml,
         json=exchange.export_json,
-        smesh=exchange.export_smesh,
         obj=exchange.export_obj,
         stl=exchange.export_stl,
         off=exchange.export_off,
+        smesh=exchange.export_smesh,
+        vmesh=exchange.export_vmesh,
     )
 
     try:
