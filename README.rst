@@ -16,21 +16,13 @@ Installing via `pip <https://pip.pypa.io/en/stable/>`_ is the easiest and the re
 
 .. code-block:: console
 
-    $ pip install geomdl.cli
-
-
-If you are getting permission errors on Linux, you can use ``--user`` switch to install to current user's package
-directory.
-
-.. code-block:: console
-
     $ pip install --user geomdl.cli
 
 From the repository
 -------------------
 
 * Clone the repository: ``git clone https://github.com/orbingol/geomdl-cli.git``
-* Inside the directory containing the cloned repository, run: ``pip install .``
+* Inside the directory containing the cloned repository, run: ``pip install --user .``
 * The setup script will install all required dependencies
 
 Using geomdl-cli
