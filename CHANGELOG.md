@@ -1,5 +1,9 @@
 # geomdl-cli Changelog
 
+## v0.5.4 released on 2019-04-18
+
+* Add vmesh as an export option
+
 ## v0.5.3 released on 2019-02-21
 
 * Update dependency to geomdl v5.0.0
