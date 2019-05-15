@@ -5,12 +5,12 @@ The recommended method for installation is using `pip <https://pypi.org/project/
 
 .. code-block:: console
 
-    pip install geomdl.cli
+    pip install --user geomdl.cli
 
 Alternatively, you can install the latest development version from the GitHub repository:
 
 * Clone the repository: ``git clone https://github.com/orbingol/geomdl-cli.git``
-* Inside the directory containing the cloned repository, run: ``pip install .``
+* Inside the directory containing the cloned repository, run: ``pip install --user .``
 * The setup script will install all required dependencies
 
 Docker Containers
@@ -27,8 +27,7 @@ prompt to pull the image prepared with Python v3.5:
 
 On the `Docker Repository <https://hub.docker.com/r/idealabisu/nurbs-python/>`_ page, you can find containers tagged for
 Python versions and `Debian <https://www.debian.org/>`_ (no suffix) and `Alpine Linux <https://alpinelinux.org/>`_
-(``-alpine`` suffix) operating systems. Please change the tag of the pull command above for downloading your preferred
-image.
+(``-alpine`` suffix) operating systems.
 
 After pulling your preferred image, run the following command:
 
@@ -36,7 +35,5 @@ After pulling your preferred image, run the following command:
 
     $ docker run --rm -it --name geomdl -p 8000:8000 idealabisu/nurbs-python:py35
 
-In all images, Matplotlib is set to use ``webagg`` backend by default. Please follow the instructions on the command
-line to view your figures.
-
-Please refer to the `Docker documentation <https://docs.docker.com/>`_ for details on using Docker.
+In all containers, Matplotlib is set to use ``webagg`` backend by default.
+Please follow the instructions on the command line to view your figures.
