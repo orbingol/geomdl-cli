@@ -8,4 +8,5 @@ docs/_build/*
 docs/_static/*
 !docs/_static/.gitkeep
 .geomdl-cli/*
+.ipynb*
 *.pyc
