@@ -1,0 +1,39 @@
+# conda-build recipe for geomdl-cli package
+{% set setup_data = load_setup_py_data() %}
+{% set build_number = 0 %}
+
+package:
+  name: geomdl.cli
+  version: {{ setup_data['version'] }}
+
+source:
+  path: ../../
+
+build:
+  noarch: python
+  number: {{ build_number }}
+  script:
+    - python setup.py sdist
+    - pip install dist/geomdl.cli-{{ setup_data['version'] }}.tar.gz --no-deps
+  entry_points:
+    - geomdl-cli=geomdl.cli.command_line:main
+
+requirements:
+  host:
+    - python
+    - setuptools
+  run:
+    - python
+
+about:
+  home: https://onurraufbingol.com/NURBS-Python/
+  license: MIT
+  license_family: MIT
+  summary: Command-line application for geomdl
+  description: Run geomdl from the command line
+  doc_url: https://nurbs-python.readthedocs.io/projects/cli/
+  dev_url: https://github.com/orbingol/geomdl-cli
+
+extra:
+  recipe-maintainers:
+    - orbingol
